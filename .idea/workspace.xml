@@ -2,6 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15cc689a-b497-4e23-a4aa-fb05f6467cb6" name="Default Changelist" comment="">
+
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/.idea/Sortir.com.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Sortir.com.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -9,12 +17,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
     </execution>
   </component>
+
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_DATA_SOURCES" value="true" />
@@ -29,6 +38,7 @@
     <expand />
     <select />
   </component>
+
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -109,12 +119,16 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-icu" />
       <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
       <path value="$PROJECT_DIR$/vendor/symfony/monolog-bridge" />
+
       <path value="$PROJECT_DIR$/vendor/symfony/validator" />
+
       <path value="$PROJECT_DIR$/vendor/symfony/security-core" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
+
       <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
+
     </include_path>
   </component>
   <component name="ProjectId" id="1Xbnu5XvdsJSSGZsGpkFz5Z9XwU" />
@@ -163,7 +177,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1581323881183</updated>
-      <workItem from="1581323883323" duration="4082000" />
+
+      <workItem from="1581323883323" duration="2505000" />
+
     </task>
     <servers />
   </component>
@@ -175,6 +191,7 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="154" key="#Composer/0.0.1280.984@0.0.1280.984" timestamp="1581324070768" />
+
     <state x="232" y="170" key="#HTTP_Proxy" timestamp="1581340357457">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
@@ -183,6 +200,7 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="154" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581340375308" />
+
     <state x="347" y="321" key="com.intellij.ide.util.TipDialog" timestamp="1581323890026">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
