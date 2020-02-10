@@ -4,6 +4,12 @@
     <list default="true" id="15cc689a-b497-4e23-a4aa-fb05f6467cb6" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
 <<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+=======
+<<<<<<< HEAD
 =======
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
 >>>>>>> 1606851e19ca2aab5b23302d1d453b1d1b237b92
@@ -14,6 +20,7 @@
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+>>>>>>> 88ed295f65f1d31067d1d0871c0bfa404009dd80
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +35,9 @@
   </component>
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> 88ed295f65f1d31067d1d0871c0bfa404009dd80
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_DATA_SOURCES" value="true" />
@@ -42,7 +52,10 @@
     <expand />
     <select />
   </component>
+<<<<<<< HEAD
+=======
 >>>>>>> 1606851e19ca2aab5b23302d1d453b1d1b237b92
+>>>>>>> 88ed295f65f1d31067d1d0871c0bfa404009dd80
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -151,6 +164,18 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="http.certificates" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="?" />
+    </option>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -186,10 +211,14 @@
       <updated>1581323881183</updated>
 <<<<<<< HEAD
       <workItem from="1581323883323" duration="1843000" />
+<<<<<<< HEAD
+      <workItem from="1581333008060" duration="3177000" />
+=======
       <workItem from="1581329640948" duration="1955000" />
 =======
       <workItem from="1581323883323" duration="2505000" />
 >>>>>>> 1606851e19ca2aab5b23302d1d453b1d1b237b92
+>>>>>>> 88ed295f65f1d31067d1d0871c0bfa404009dd80
     </task>
     <servers />
   </component>
@@ -201,6 +230,40 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="154" key="#Composer/0.0.1280.984@0.0.1280.984" timestamp="1581324070768" />
+<<<<<<< HEAD
+    <state x="232" y="167" key="#HTTP_Proxy" timestamp="1581333263088">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="232" y="167" key="#HTTP_Proxy/0.0.1280.984@0.0.1280.984" timestamp="1581333263088" />
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581340073791">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581340073791" />
+    <state x="408" y="323" width="463" height="599" key="#com.intellij.tools.ToolEditorDialog" timestamp="1581339696361">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="408" y="323" width="463" height="599" key="#com.intellij.tools.ToolEditorDialog/0.0.1280.984@0.0.1280.984" timestamp="1581339696361" />
+    <state x="516" y="283" key="#com.jetbrains.php.framework.ui.FailedToParseDialog" timestamp="1581339597993">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="516" y="283" key="#com.jetbrains.php.framework.ui.FailedToParseDialog/0.0.1280.984@0.0.1280.984" timestamp="1581339597993" />
+    <state x="364" y="371" key="ComposerCompositePathDialog" timestamp="1581339679067">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="364" y="371" key="ComposerCompositePathDialog/0.0.1280.984@0.0.1280.984" timestamp="1581339679067" />
+    <state x="420" y="248" key="FileChooserDialogImpl" timestamp="1581339677554">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="420" y="248" key="FileChooserDialogImpl/0.0.1280.984@0.0.1280.984" timestamp="1581339677554" />
+    <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1581333918010">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1280.984@0.0.1280.984" timestamp="1581333918010" />
+    <state x="141" y="135" key="SettingsEditor" timestamp="1581339705051">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="141" y="135" key="SettingsEditor/0.0.1280.984@0.0.1280.984" timestamp="1581339705051" />
+=======
 <<<<<<< HEAD
     <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581340397582">
       <screen x="0" y="0" width="1280" height="984" />
@@ -216,9 +279,26 @@
     </state>
     <state x="232" y="154" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581340375308" />
 >>>>>>> 1606851e19ca2aab5b23302d1d453b1d1b237b92
+>>>>>>> 88ed295f65f1d31067d1d0871c0bfa404009dd80
     <state x="347" y="321" key="com.intellij.ide.util.TipDialog" timestamp="1581323890026">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="347" y="321" key="com.intellij.ide.util.TipDialog/0.0.1280.984@0.0.1280.984" timestamp="1581323890026" />
+    <state x="337" y="90" width="606" height="804" key="find.popup" timestamp="1581340093336">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="337" y="90" width="606" height="804" key="find.popup/0.0.1280.984@0.0.1280.984" timestamp="1581340093336" />
+    <state x="525" y="223" key="ftp.server.browser" timestamp="1581339456721">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="525" y="223" key="ftp.server.browser/0.0.1280.984@0.0.1280.984" timestamp="1581339456721" />
+    <state x="350" y="337" width="672" height="677" key="run.anything.popup" timestamp="1581339190011">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="350" y="337" width="672" height="677" key="run.anything.popup/0.0.1280.984@0.0.1280.984" timestamp="1581339190011" />
+    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup" timestamp="1581339198665">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup/0.0.1280.984@0.0.1280.984" timestamp="1581339198665" />
   </component>
 </project>
