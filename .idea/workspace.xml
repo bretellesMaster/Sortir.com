@@ -116,6 +116,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -156,6 +157,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="154" key="#Composer/0.0.1280.984@0.0.1280.984" timestamp="1581324070768" />
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581340397582">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="232" y="151" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984@0.0.1280.984" timestamp="1581340397582" />
     <state x="347" y="321" key="com.intellij.ide.util.TipDialog" timestamp="1581323890026">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
