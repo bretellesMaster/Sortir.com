@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -9,6 +10,7 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/Sortie/Create", name="sortieCreate")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieCreate()
     {
@@ -17,6 +19,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieDetails()
     {
@@ -25,6 +28,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/Sortie/Modif/{id}", name="sortieModif")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieModif()
     {
@@ -34,6 +38,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/Sortie/Cancel{id}", name="sortieCancel")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieCancel()
     {
