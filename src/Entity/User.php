@@ -49,6 +49,16 @@ class User implements UserInterface
      */
     private $telephone;
 
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $pseudo;
+
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $site_rattachement;
+
 
 
 
@@ -166,6 +176,30 @@ class User implements UserInterface
 
         return $this;
     }
+
+//    public function getPseudo(): ?string
+//    {
+//        return $this->pseudo;
+//    }
+//
+//    public function setPseudo(string $pseudo): self
+//    {
+//        $this->pseudo = $pseudo;
+//
+//        return $this;
+//    }
+//
+//    public function getSiteRattachement(): ?string
+//    {
+//        return $this->site_rattachement;
+//    }
+//
+//    public function setSiteRattachement(string $site_rattachement): self
+//    {
+//        $this->site_rattachement = $site_rattachement;
+//
+//        return $this;
+//    }
 
 
 

@@ -19,12 +19,11 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
-                    - App\Security\Login2Authenticator
-                entry_point: App\Security\Login2Authenticator
+                entry_point: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: main
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
