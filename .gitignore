@@ -9,7 +9,7 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-.composer.lock
+composer.lock
 .idea
 .env
 
