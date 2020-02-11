@@ -6,7 +6,6 @@ use App\Entity\Site;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Faker;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
