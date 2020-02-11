@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-
+     * @IsGranted("ROLE_USER")
      * @Route("/User/Profile", name="userProfile")
      */
     public function userModif(EntityManagerInterface $em, Request $request)
@@ -32,6 +34,7 @@ class UserController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/User/Details/{id}", name="userDetails")
      */
     public function userDetails()
