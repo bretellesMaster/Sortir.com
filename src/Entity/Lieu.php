@@ -44,7 +44,8 @@ class Lieu
     private $sorties;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieus")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieux")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $ville;
 

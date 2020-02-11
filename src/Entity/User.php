@@ -51,6 +51,11 @@ class User implements UserInterface
     private $telephone;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudo;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Sortie", inversedBy="users")
      */
     private $sorties;
@@ -71,8 +76,6 @@ class User implements UserInterface
         $this->sorties = new ArrayCollection();
         $this->orgsorties = new ArrayCollection();
     }
-
-
 
 
     public function getId(): ?int
@@ -190,6 +193,20 @@ class User implements UserInterface
         return $this;
     }
 
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+
     /**
      * @return Collection|Sortie[]
      */
@@ -258,6 +275,7 @@ class User implements UserInterface
 
         return $this;
     }
+
 
 
 

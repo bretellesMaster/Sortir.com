@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
@@ -9,6 +10,9 @@ use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Form\VilleType;
 use Doctrine\ORM\EntityManagerInterface;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +21,7 @@ class SortieController extends AbstractController
 {
     /**
      * @Route("/Sortie/Create", name="sortieCreate")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieCreate(EntityManagerInterface $em, Request $request)
     {
@@ -66,6 +71,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieDetails(EntityManagerInterface $em)
     {
@@ -77,6 +83,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/Sortie/Modif/{id}", name="sortieModif")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieModif()
     {
@@ -86,6 +93,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/Sortie/Cancel{id}", name="sortieCancel")
+     * @IsGranted("ROLE_USER")
      */
     public function sortieCancel()
     {
