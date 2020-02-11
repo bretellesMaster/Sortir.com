@@ -33,6 +33,7 @@ class User implements UserInterface
      */
     private $password;
 
+
     /**
      * @ORM\Column(type="string", length=50)
      */
@@ -47,6 +48,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=50)
      */
     private $telephone;
+
 
 
 
@@ -128,6 +130,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+
     public function getNom(): ?string
     {
         return $this->nom;
@@ -163,6 +166,7 @@ class User implements UserInterface
 
         return $this;
     }
+
 
 
 }
