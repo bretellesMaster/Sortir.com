@@ -37,18 +37,7 @@ class SortieController extends AbstractController
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            $lieu->setNom();
-            $lieu->setRue();
-            $lieu->getLongitude();
-            $lieu->setLatitude();
-            $em->persist($lieu);
-            $sortie->setNom();
-            $sortie->setSite();
-            $sortie->setInfosSortie();
-            $sortie->setNbInscriptionsMax();
-            $sortie->setDuree();
-            $sortie->setDateLimiteInscription();
-            $sortie->setDateHeureDebut();
+         
             $em->persist($sortie);
 
             $em->flush();
@@ -95,6 +84,8 @@ class SortieController extends AbstractController
      */
     public function sortieCancel()
     {
+
+
         return $this->render('sortie/sortieCancel.html.twig');
     }
 }
