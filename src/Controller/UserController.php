@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,22 +11,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user/form/{id}", name="userForm")
+
+     * @Route("/User/Profile", name="userProfile")
      */
-    public function gestionProfil(EntityManagerInterface $em, Request $request, $id)
+    public function userModif(EntityManagerInterface $em, Request $request)
     {
-        $user = $em->getRepository(User::class)->find($id);
+        $user = $this->getUser();
         $form = $this->createForm( UserType::class, $user);
         //Traitement du formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid())
         {
+            $em->persist($user);
             $em->flush();
-            $this->addFlash("success", "Profil updated or not !");
-            return $this->redirectToRoute('base');
+            $this->addFlash("success", "Profil updated !");
+            return $this->redirectToRoute('userProfile');
         }
-        return $this->render("profil/formulaire.html.twig", [
+        return $this->render("user/userForm.html.twig", [
             'userForm' => $form->createView()]);
     }
+
+    /**
+     * @Route("/User/Details/{id}", name="userDetails")
+     */
+    public function userDetails()
+    {
+        return $this->render('user/userDetails.html.twig');
+    }
+
 
 }

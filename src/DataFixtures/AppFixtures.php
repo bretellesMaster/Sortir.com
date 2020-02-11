@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Site;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -26,7 +27,13 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $site = new Site();
+        $site->setNom('Saint-Herblain');
+        $manager->persist($site);
+
        $nathan = new User();
+        $nathan->setSite($site);
+        $nathan->setPseudo("Znatan");
         $nathan->setEmail("nathan.gonzalez2019@campus-eni.fr");
         $nathan->setNom("Gonzalez");
         $nathan->setPrenom('Nathan');
@@ -37,6 +44,8 @@ class AppFixtures extends Fixture
         $nathan->setTelephone("0102030405");
 
         $kevin = new User();
+        $kevin->setSite($site);
+        $kevin->setPseudo("bretello");
         $kevin->setEmail("kevin.levigouroux2019@campus-eni.fr");
         $kevin->setNom("Le Vigouroux");
         $kevin->setPrenom('Kevin');
@@ -47,6 +56,8 @@ class AppFixtures extends Fixture
 
 
        $bunny = new User();
+        $bunny->setSite($site);
+        $bunny->setPseudo("bbunny");
         $bunny->setEmail("bunny.sin2019@campus-eni.fr");
         $bunny->setNom("Sin");
         $bunny->setPrenom('Bunny');
@@ -58,6 +69,8 @@ class AppFixtures extends Fixture
 
 
        $damien = new User();
+        $damien->setSite($site);
+        $damien->setPseudo("Mimi");
         $damien->setEmail("damien.nicolleau2019@campus-eni.fr");
         $damien->setNom("Nicolleau");
         $damien->setPrenom('Damien');
@@ -75,8 +88,10 @@ class AppFixtures extends Fixture
 
 
         for($i=0; $i < 10; $i++){
-            $faker = Faker\Factory::create('fr_FR');
+            $faker = Faker\Factory::create('es_ES');
             $user = new User();
+            $user->setSite($site);
+            $user->setPseudo($faker->userName);
             $user->setPrenom($faker->firstName);
             $user->setNom($faker->lastName);
             $user->setEmail($user->getPrenom().".".$user->getNom().$faker->year('now')."@campus-eni.fr");
