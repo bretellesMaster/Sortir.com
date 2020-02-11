@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,7 +35,6 @@ class User implements UserInterface
      */
     private $password;
 
-
     /**
      * @ORM\Column(type="string", length=50)
      */
@@ -48,6 +49,28 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=50)
      */
     private $telephone;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie", inversedBy="users")
+     */
+    private $sorties;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateurs")
+     */
+    private $orgsorties;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="user")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $site;
+
+    public function __construct()
+    {
+        $this->sorties = new ArrayCollection();
+        $this->orgsorties = new ArrayCollection();
+    }
 
 
 
@@ -163,6 +186,75 @@ class User implements UserInterface
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSorty(Sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+        }
+
+        return $this;
+    }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->contains($sorty)) {
+            $this->sorties->removeElement($sorty);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getOrgsorties(): Collection
+    {
+        return $this->orgsorties;
+    }
+
+    public function addOrgsorty(Sortie $orgsorty): self
+    {
+        if (!$this->orgsorties->contains($orgsorty)) {
+            $this->orgsorties[] = $orgsorty;
+            $orgsorty->setOrganisateurs($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrgsorty(Sortie $orgsorty): self
+    {
+        if ($this->orgsorties->contains($orgsorty)) {
+            $this->orgsorties->removeElement($orgsorty);
+            // set the owning side to null (unless already changed)
+            if ($orgsorty->getOrganisateurs() === $this) {
+                $orgsorty->setOrganisateurs(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): self
+    {
+        $this->site = $site;
 
         return $this;
     }
