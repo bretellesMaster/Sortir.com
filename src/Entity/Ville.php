@@ -79,7 +79,7 @@ class Ville
     {
         if (!$this->lieus->contains($lieus)) {
             $this->lieus[] = $lieus;
-            $lieus->setVilles($this);
+            $lieus->setVille($this);
         }
 
         return $this;
@@ -90,8 +90,8 @@ class Ville
         if ($this->lieus->contains($lieus)) {
             $this->lieus->removeElement($lieus);
             // set the owning side to null (unless already changed)
-            if ($lieus->getVilles() === $this) {
-                $lieus->setVilles(null);
+            if ($lieus->getVille() === $this) {
+                $lieus->setVille(null);
             }
         }
 

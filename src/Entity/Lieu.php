@@ -45,9 +45,8 @@ class Lieu
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ville", inversedBy="lieus")
-     * @ORM\JoinColumn(nullable=false)
      */
-    private $villes;
+    private $ville;
 
     public function __construct()
     {
@@ -119,7 +118,7 @@ class Lieu
     {
         if (!$this->sorties->contains($sorty)) {
             $this->sorties[] = $sorty;
-            $sorty->setPlaces($this);
+            $sorty->setLieux($this);
         }
 
         return $this;
@@ -130,22 +129,22 @@ class Lieu
         if ($this->sorties->contains($sorty)) {
             $this->sorties->removeElement($sorty);
             // set the owning side to null (unless already changed)
-            if ($sorty->getPlaces() === $this) {
-                $sorty->setPlaces(null);
+            if ($sorty->getLieux() === $this) {
+                $sorty->setLieux(null);
             }
         }
 
         return $this;
     }
 
-    public function getVilles(): ?Ville
+    public function getVille(): ?Ville
     {
-        return $this->villes;
+        return $this->ville;
     }
 
-    public function setVilles(?Ville $villes): self
+    public function setVille(?Ville $ville): self
     {
-        $this->villes = $villes;
+        $this->ville = $ville;
 
         return $this;
     }

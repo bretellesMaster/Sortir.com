@@ -2,7 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
+use App\Entity\Sortie;
+use App\Entity\Ville;
+use App\Form\LieuType;
+use App\Form\SortieType;
+use App\Form\VilleType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
@@ -10,17 +18,61 @@ class SortieController extends AbstractController
     /**
      * @Route("/Sortie/Create", name="sortieCreate")
      */
-    public function sortieCreate()
+    public function sortieCreate(EntityManagerInterface $em, Request $request)
     {
-        return $this->render('sortie/sortieCreate.html.twig');
+
+        $sortie= new Sortie();
+
+        $lieu = new Lieu();
+
+
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+        $sortieForm=$this->createForm(SortieType::class, $sortie);
+
+        $sortieForm->handleRequest($request);
+
+
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+            $lieu->setNom();
+            $lieu->setRue();
+            $lieu->getLongitude();
+            $lieu->setLatitude();
+            $em->persist($lieu);
+            $sortie->setNom();
+            $sortie->setSite();
+            $sortie->setInfosSortie();
+            $sortie->setNbInscriptionsMax();
+            $sortie->setDuree();
+            $sortie->setDateLimiteInscription();
+            $sortie->setDateHeureDebut();
+            $em->persist($sortie);
+
+            $em->flush();
+
+
+            $this->addFlash('success',"Has been added !");
+            return $this->redirectToRoute("main");
+        }
+
+        return $this->render('sortie/sortieCreate.html.twig',
+            [
+                "sortieForm"=>$sortieForm->createView(),
+                "lieuForm"=>$lieuForm->createView(),
+
+
+            ]);
     }
 
     /**
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
      */
-    public function sortieDetails()
+    public function sortieDetails(EntityManagerInterface $em)
     {
-        return $this->render('sortie/sortieDetails.html.twig');
+        $sortieRepository=$em->getRepository(Sortie::class);
+        $sorties=$sortieRepository->findAll();
+        return $this->render('sortie/sortieDetails.html.twig',
+            ["sorties"=>$sorties]);
     }
 
     /**
