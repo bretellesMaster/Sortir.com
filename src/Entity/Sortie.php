@@ -50,9 +50,9 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
-    private $places;
+    private $lieu;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="sorties")
@@ -61,19 +61,19 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orgsorties")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
-    private $organisateurs;
+    private $organisateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortie")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $site;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="sorties")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $etat;
 
@@ -159,14 +159,14 @@ class Sortie
         return $this;
     }
 
-    public function getPlaces(): ?Lieu
+    public function getLieu(): ?Lieu
     {
-        return $this->places;
+        return $this->lieu;
     }
 
-    public function setPlaces(?Lieu $places): self
+    public function setLieu(?Lieu $lieu): self
     {
-        $this->places = $places;
+        $this->lieu = $lieu;
 
         return $this;
     }

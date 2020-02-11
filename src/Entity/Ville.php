@@ -77,9 +77,11 @@ class Ville
 
     public function addLieu(Lieu $lieu): self
     {
+
         if (!$this->lieux->contains($lieu)) {
             $this->lieux[] = $lieu;
             $lieu->setVilles($this);
+
         }
 
         return $this;
@@ -90,8 +92,10 @@ class Ville
         if ($this->lieux->contains($lieu)) {
             $this->lieux->removeElement($lieu);
             // set the owning side to null (unless already changed)
+
             if ($lieu->getVilles() === $this) {
                 $lieu->setVilles(null);
+
             }
         }
 

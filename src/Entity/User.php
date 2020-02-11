@@ -61,13 +61,13 @@ class User implements UserInterface
     private $sorties;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateurs")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="organisateur")
      */
     private $orgsorties;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="user")
-     * @ORM\JoinColumn(nullable=false)
+     *
      */
     private $site;
 
@@ -245,7 +245,7 @@ class User implements UserInterface
     {
         if (!$this->orgsorties->contains($orgsorty)) {
             $this->orgsorties[] = $orgsorty;
-            $orgsorty->setOrganisateurs($this);
+            $orgsorty->setOrganisateur($this);
         }
 
         return $this;
@@ -256,8 +256,8 @@ class User implements UserInterface
         if ($this->orgsorties->contains($orgsorty)) {
             $this->orgsorties->removeElement($orgsorty);
             // set the owning side to null (unless already changed)
-            if ($orgsorty->getOrganisateurs() === $this) {
-                $orgsorty->setOrganisateurs(null);
+            if ($orgsorty->getOrganisateur() === $this) {
+                $orgsorty->setOrganisateur(null);
             }
         }
 
