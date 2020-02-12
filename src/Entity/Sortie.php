@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SortieRepository")
@@ -55,7 +56,9 @@ class Sortie
     private $lieu;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="sorties")
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="sorties",)
+     *
      */
     private $users;
 
@@ -199,14 +202,14 @@ class Sortie
         return $this;
     }
 
-    public function getOrganisateurs(): ?User
+    public function getOrganisateur(): ?User
     {
-        return $this->organisateurs;
+        return $this->organisateur;
     }
 
-    public function setOrganisateurs(?User $organisateurs): self
+    public function setOrganisateur(?User $organisateur): self
     {
-        $this->organisateurs = $organisateurs;
+        $this->organisateur = $organisateur;
 
         return $this;
     }
