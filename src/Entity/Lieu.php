@@ -39,7 +39,7 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="places")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="lieu")
      */
     private $sorties;
 

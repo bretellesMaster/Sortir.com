@@ -1,4 +1,24 @@
-.boutonModifUser{
-text-align: center;
+.buttonUserForm {
+    text-align: center;
     margin-top: 2em;
+}
+
+body{
+    background: url("../img/background.jpg") center fixed;
+}
+
+.pageLogin{
+    padding-top: 100px !important;
+}
+
+.slogan{
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+
+.connexion{
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+    background-color: white;
 }

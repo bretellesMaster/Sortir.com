@@ -24,46 +24,55 @@ class SortieController extends AbstractController
     public function sortieCreate(EntityManagerInterface $em, Request $request)
     {
 
-        $sortie= new Sortie();
+        $sortie = new Sortie();
 
         $lieu = new Lieu();
+        $ville = new Ville();
 
 
-        $lieuForm = $this->createForm(LieuType::class, $lieu);
-        $sortieForm=$this->createForm(SortieType::class, $sortie);
+        $sortieForm = $this->createForm(SortieType::class, $sortie);
+
 
         $sortieForm->handleRequest($request);
 
 
-        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+           $nomVille = $sortieForm->get('ville')->getViewData();
+           $codePostal = $sortieForm->get('codePostal')->getViewData();
+           $nomLieu = $sortieForm->get('nomLieu')->getViewData();
+           $rueLieu = $sortieForm->get('rueLieu')->getViewData();
+           $latitude = $sortieForm->get('latitude')->getViewData();
+           $longitude = $sortieForm->get('longitude')->getViewData();
 
-            $lieu->setNom();
-            $lieu->setRue();
-            $lieu->getLongitude();
-            $lieu->setLatitude();
+
+            $ville->setNom($nomVille);
+            $ville->setCodePostal($codePostal);
+            $lieu->setNom($nomLieu);
+            $lieu->setLatitude($latitude);
+            $lieu->setLongitude($longitude);
+            $lieu->setRue($rueLieu);
+            $lieu->setVille($ville);
+            $sortie->setLieu($lieu);
+
+
+
+            $sortie->setSite($this->getUser()->getSite());
+            $sortie->setOrganisateur($this->getUser());
+
+            $em->persist($ville);
             $em->persist($lieu);
-            $sortie->setNom();
-            $sortie->setSite();
-            $sortie->setInfosSortie();
-            $sortie->setNbInscriptionsMax();
-            $sortie->setDuree();
-            $sortie->setDateLimiteInscription();
-            $sortie->setDateHeureDebut();
             $em->persist($sortie);
 
             $em->flush();
 
 
-            $this->addFlash('success',"Has been added !");
+            $this->addFlash('success', "Has been added !");
             return $this->redirectToRoute("main");
         }
 
         return $this->render('sortie/sortieCreate.html.twig',
             [
-                "sortieForm"=>$sortieForm->createView(),
-                "lieuForm"=>$lieuForm->createView(),
-
-
+                "sortieForm" => $sortieForm->createView(),
             ]);
     }
 
@@ -73,10 +82,10 @@ class SortieController extends AbstractController
      */
     public function sortieDetails(EntityManagerInterface $em)
     {
-        $sortieRepository=$em->getRepository(Sortie::class);
-        $sorties=$sortieRepository->findAll();
+        $sortieRepository = $em->getRepository(Sortie::class);
+        $sorties = $sortieRepository->findAll();
         return $this->render('sortie/sortieDetails.html.twig',
-            ["sorties"=>$sorties]);
+            ["sorties" => $sorties]);
     }
 
     /**
@@ -95,6 +104,8 @@ class SortieController extends AbstractController
      */
     public function sortieCancel()
     {
+
+
         return $this->render('sortie/sortieCancel.html.twig');
     }
 }

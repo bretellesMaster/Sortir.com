@@ -5,8 +5,11 @@ namespace App\Form;
 use App\Entity\Sortie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
@@ -24,7 +27,26 @@ class SortieType extends AbstractType
             ])
             ->add('nbInscriptionsMax')
             ->add('infosSortie')
-            ->add('site', RadioType::class,["name"=>"site"])
+            ->add('nomLieu', TextType::class, [
+                'mapped'=>false,
+            ])
+            ->add('rueLieu', TextType::class, [
+                'mapped'=>false,
+            ])
+            ->add('latitude', TextType::class, [
+                'mapped'=>false,
+            ])
+
+            ->add('longitude', TextType::class, [
+                'mapped'=>false,
+            ])
+            ->add('ville', TextType::class, [
+                'mapped'=>false,
+            ])
+            ->add('codePostal', TextType::class, [
+                'mapped'=>false,
+            ])
+            ->add('Valider', SubmitType::class)
         ;
     }
 
