@@ -4,27 +4,46 @@
 
 {% block body %}
 
+    <h3>Mon profil</h3>
+
     <div class="row">
         <div class="col-8 offset-2">
 
             {{ form_start(userForm) }}
 
-            {{ form_row(userForm.pseudo) }}
-            {{ form_row(userForm.prenom) }}
-            {{ form_row(userForm.nom) }}
-            {{ form_row(userForm.telephone) }}
-            {{ form_row(userForm.email) }}
-            {{ form_row(userForm.password) }}
+            {{ form_label(userForm.pseudo) }}
+            {{ form_widget(userForm.pseudo) }}
 
-{#    TO DO        #}
-{#            {{ form_row(userForm.CONFIRMATION_password) }}#}
-          {{ form_row(userForm.site) }}
-{#          {{ form_row(userForm.MA_PHOTO) }}#}
+            {{ form_label(userForm.prenom) }}
+            {{ form_widget(userForm.prenom) }}
 
-{#      bouton ENREGISTRER(les modifications) - bouton ANNULER( retour Accueil)      #}
-            <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
-            <a href="{{path('main')}}" class="btn btn-primary btn-lg active" role="button" title="Lien 1">Annuler</a>
+            {{ form_label(userForm.nom) }}
+            {{ form_widget(userForm.nom) }}
 
+            {{ form_label(userForm.telephone) }}
+            {{ form_widget(userForm.telephone) }}
+
+            {{ form_label(userForm.email) }}
+            {{ form_widget(userForm.email) }}
+
+            {{ form_label(userForm.plainPassword.first) }}
+            {{ form_widget(userForm.plainPassword.first) }}
+
+            {{ form_label(userForm.plainPassword.second) }}
+            {{ form_widget(userForm.plainPassword.second) }}
+
+            {{ form_label(userForm.site) }}
+            {{ form_widget(userForm.site) }}
+
+
+
+
+            {#      bouton ENREGISTRER(les modifications) - bouton ANNULER( retour Accueil)      #}
+            <div class="buttonUserForm">
+                <button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>
+                <a href="{{ path('main') }}" class="btn btn-primary btn-lg active" role="button"
+                   title="Lien 1">Annuler</a>
+            </div>
 
             {{ form_end(userForm) }}
 
