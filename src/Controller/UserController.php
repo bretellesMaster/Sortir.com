@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,9 +44,11 @@ class UserController extends AbstractController
      * @IsGranted("ROLE_USER")
      * @Route("/User/Details/{id}", name="userDetails")
      */
-    public function userDetails()
+    public function userDetails(EntityManagerInterface $em, $id)
     {
-        return $this->render('user/userDetails.html.twig');
+        $userRepository = $em->getRepository(User::class);
+        $user = $userRepository->find($id);
+        return $this->render('user/userDetails.html.twig', ["user" => $user]);
     }
 
 
