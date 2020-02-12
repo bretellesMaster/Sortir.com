@@ -4,16 +4,17 @@
 <head>
 
     <meta charset="UTF-8">
-
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Open+Sans+Condensed:300|Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
     <link rel="stylesheet" href= {{ asset("css/style.css") }}>
+
     <title>{% block title %}Bienvenue{% endblock %}</title>
 
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#"><h1>Sortir.com</h1></a>
+    <a class="navbar-brand" href="#"><h1 class="titre">Sortir.com</h1></a>
     {% if is_granted("ROLE_USER") %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

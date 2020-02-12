@@ -2,8 +2,12 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Site;
+use App\Entity\Sortie;
 use App\Entity\User;
+use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -26,6 +30,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $faker = Faker\Factory::create('fr_FR');
         $site = new Site();
         $site->setNom('Saint-Herblain');
         $manager->persist($site);
@@ -87,7 +92,7 @@ class AppFixtures extends Fixture
 
 
         for($i=0; $i < 10; $i++){
-            $faker = Faker\Factory::create('es_ES');
+
             $user = new User();
             $user->setSite($site);
             $user->setPseudo($faker->userName);
@@ -102,6 +107,86 @@ class AppFixtures extends Fixture
 
 
         }
+
+
+
+            $ville = new Ville();
+        $ville->setNom('Nantes');
+        $ville->setCodePostal('44400');
+
+        $manager->persist($ville);
+
+        for($i = 0; $i < 20; $i++){
+            $lieu = new Lieu();
+            $lieu->setNom('Lieu'.($i+1));
+            $lieu->setVille($ville);
+            $lieu->setRue('Rue '.$faker->name);
+            $lieu->setLongitude($faker->numberBetween(0, 40));
+            $lieu->setLatitude($faker->numberBetween(0, 40));
+            $manager->persist($lieu);
+
+
+
+        }
+        $etat = new Etat();
+        $etat2 = new Etat();
+        $etat3 = new Etat();
+        $etat4 = new Etat();
+        $etat5 = new Etat();
+        $etat6 = new Etat();
+        $etat->setLibelle('Créée');
+        $etat2->setLibelle('Ouverte');
+        $etat3->setLibelle('Clôturée');
+        $etat4->setLibelle('Activité en cours');
+        $etat5->setLibelle('Passée');
+        $etat6->setLibelle('Annulé');
+        $manager->persist($etat);
+        $manager->persist($etat2);
+        $manager->persist($etat3);
+        $manager->persist($etat4);
+        $manager->persist($etat5);
+        $manager->persist($etat6);
+$manager->flush();
+
+        $lieux = $manager->getRepository(Lieu::class)->findAll();
+        $orga = $manager->getRepository(User::class)->findAll();
+        $sites = $manager->getRepository(Site::class)->findAll();
+        $etats = $manager->getRepository(Etat::class)->findAll();
+        for($i=0; $i < 50; $i++){
+            $sortie = new Sortie();
+            $sortie->setNom('Sortie'.($i+1));
+            $sortie->setLieu($faker->randomElement($lieux));
+            $sortie->setOrganisateur($faker->randomElement($orga));
+            $sortie->setSite($faker->randomElement($sites));
+            $datedebut = $faker->dateTimeBetween('now', '+4 months');
+            $sortie->setEtat($faker->randomElement($etats));
+            $sortie->setDateHeureDebut($datedebut);
+            $datefin = $faker->dateTimeBetween('-10 days', $datedebut);
+            $sortie->setDateLimiteInscription($datefin);
+            $sortie->setDuree(4);
+            $sortie->setInfosSortie($faker->sentence($nbWords = 6, $variableNbWords = true));
+            $sortie->setNbInscriptionsMax(rand(5, 30));
+            $manager->persist($sortie);
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        for($is = 0; $i < 30; $i++){
+            $sortie = new Sortie();
+
+
+        }
+
+
     $manager->flush();
 
     }

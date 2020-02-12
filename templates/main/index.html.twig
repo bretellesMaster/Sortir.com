@@ -5,7 +5,72 @@
 {% block body %}
 
     <div class="container">
-        <h2> Bienvenue sur Sortir.com</h2>
-    </div>
 
+
+        <div class="filtres" style="border: 1px solid black; margin-bottom: 20px">
+            <h2>Filtrer les sorties</h2>
+
+            <form>
+                <label>Site :</label>
+                <input type="text">
+
+            </form>
+
+        </div>
+
+        <div class="tableauSortie d-none d-lg-block">
+            <table class="table table-hover table-light table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nom de l'Évènement</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Clôture inscription</th>
+                    <th scope="col">Nombre d'inscrit</th>
+                    <th scope="col">État</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="tbod">
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                        <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                        <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>s</td>
+                        <td><a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                        <td>Afficher</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            <div class="tableauSortie2 d-block d-lg-none ">
+                <table class="table table-hover table-light table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nom de l'Évènement</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Lieu</th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="tbod">
+                    {% for sortie in sorties %}
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                            <td>{{ sortie.lieu.ville.nom }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+        </div>
+    </div>
 {% endblock %}

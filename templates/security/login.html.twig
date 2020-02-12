@@ -6,11 +6,11 @@
 
         <div class="container pageLogin">
             <div class="row ">
-                <div class="slogan col-6 ">
+                <div class="slogan offset-lg-1 col-sm-12 col-md-6 ">
                     <h1>Le site d'organisation de sortie de l'ENI</h1>
 
                 </div>
-                <div class="connexion col-5">
+                <div class="connexion col-sm-12 col-md-6 col-lg-4">
                     <form method="post">
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
