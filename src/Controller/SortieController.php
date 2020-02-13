@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
@@ -20,21 +21,24 @@ class SortieController extends AbstractController
     /**
      * @Route("/Sortie/Create", name="sortieCreate")
      * @IsGranted("ROLE_USER")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function sortieCreate(EntityManagerInterface $em, Request $request)
     {
 
         $sortie = new Sortie();
-
+        $etat = new Etat();
         $lieu = new Lieu();
         $ville = new Ville();
 
-
         $sortieForm = $this->createForm(SortieType::class, $sortie);
-
 
         $sortieForm->handleRequest($request);
 
+
+        $etat->setLibelle('Créée');
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
            $nomVille = $sortieForm->get('ville')->getViewData();
@@ -53,7 +57,7 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-
+            $etat->setLibelle('Ouverte');
 
 
             $sortie->setSite($this->getUser()->getSite());
@@ -69,6 +73,8 @@ class SortieController extends AbstractController
             $this->addFlash('success', "Has been added !");
             return $this->redirectToRoute("main");
         }
+
+
 
         return $this->render('sortie/sortieCreate.html.twig',
             [

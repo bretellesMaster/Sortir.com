@@ -40,7 +40,7 @@
                         <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
-                        <td>s</td>
+                        <td>..s..</td>
                         <td><a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
                         <td>Afficher</td>
                     </tr>
@@ -69,8 +69,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-
-
         </div>
     </div>
+
+    <a class="btn btn-primary" href="{{path('sortieCreate')}}" role="button">Créer une sortie </a>
+
 {% endblock %}
