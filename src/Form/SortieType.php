@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Sortie;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -46,8 +47,8 @@ class SortieType extends AbstractType
             ->add('codePostal', TextType::class, [
                 'mapped'=>false,
             ])
-            ->add('Valider', SubmitType::class)
-        ;
+            ->add('Valider', SubmitType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
