@@ -5,7 +5,9 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Lieu;
+use App\Entity\Site;
 use App\Entity\Sortie;
+use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\LieuType;
 use App\Form\SortieType;
@@ -88,16 +90,21 @@ class SortieController extends AbstractController
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieDetails(EntityManagerInterface $em, $id=null)
+    public function sortieDetails($id, EntityManagerInterface $em)
     {
+        $userRepository = $em->getRepository(User::class);
+        $users = $userRepository->findBy(['id' => $id]);
         $sortieRepository = $em->getRepository(Sortie::class);
-        if ($id !=null){
-            $sorties = $sortieRepository->find($id);
-            return $this->render('sortie/sortieDetails.html.twig',
-            ["sorties" => $sorties]);
-        }
-        $sorties = $sortieRepository->findAll();
-        return $this->redirectToRoute("main");
+        $sorties = $sortieRepository->findById(['id' => $id]);
+        $lieuRepository = $em->getRepository(Lieu::class);
+        $lieux = $lieuRepository->findById(['id' => $id]);
+        $villeRepository = $em->getRepository(Ville::class);
+        $villes = $villeRepository->findById(['id' => $id]);
+        return $this->render('sortie/sortieDetails.html.twig',
+            ["sorties" => $sorties,
+                'users' => $users,
+                'ville' => $villes,
+                'lieu' => $lieux]);
     }
 
     /**
@@ -106,20 +113,20 @@ class SortieController extends AbstractController
      */
     public function sortieModif(EntityManagerInterface $em, Request $request, $id)
     {
-        $sortieRepository = $em->getRepository(Sortie::class);
-        $sorties = $sortieRepository->find($id);
-
-        $villeRepository = $em->getRepository(Ville::class);
-        $villes = $villeRepository->find($id);
-
-        $lieuRepository = $em->getRepository(Lieu::class);
-        $lieux = $lieuRepository->find($id);
-
-        return $this->render('sortie/sortieModif.html.twig',
-            ["sorties"=> $sorties],
-            ["villes"=> $villes],
-            ["lieux"=> $lieux],
-        );
+//        $sortieRepository = $em->getRepository(Sortie::class);
+//        $sorties = $sortieRepository->find($id);
+//
+//        $villeRepository = $em->getRepository(Ville::class);
+//        $villes = $villeRepository->find($id);
+//
+//        $lieuRepository = $em->getRepository(Lieu::class);
+//        $lieux = $lieuRepository->find($id);
+//
+//        return $this->render('sortie/sortieModif.html.twig',
+//            ["sorties"=> $sorties],
+//            ["villes"=> $villes],
+//            ["lieux"=> $lieux],
+//        );
     }
 
 
@@ -127,8 +134,44 @@ class SortieController extends AbstractController
      * @Route("/Sortie/Cancel{id}", name="sortieCancel")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieCancel()
+    public function sortieCancel($id,EntityManagerInterface $em)
     {
         return $this->render('sortie/sortieCancel.html.twig');
     }
+
+
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/main2", name="filtre")
+     * @param EntityManagerInterface $em
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function filtre(EntityManagerInterface $em, Request $request){
+       $rep = $em->getRepository(Sortie::class);
+       $sites = $em->getRepository(Site::class)->findAll();
+
+        $filtre = [
+            'search' => $request->get('search'),
+            'site' => $request->get('site'),
+            'dateDebut' => $request->get('dateDebut'),
+            'dateFin' => $request->get('dateFin'),
+            'checkbox1' => $request->get('checkbox1'),
+            'checkbox2' => $request->get('checkbox2'),
+            'checkbox3' => $request->get('checkbox3'),
+            'checkbox4' => $request->get('checkbox4'),
+
+        ];
+        $user = $this->getUser();
+
+        $sorties = $rep->filtre($filtre, $user);
+
+        return $this->render('main/index.html.twig', [
+            'sorties' => $sorties,
+            'sites'=>$sites
+
+            ]);
+    }
+
 }
