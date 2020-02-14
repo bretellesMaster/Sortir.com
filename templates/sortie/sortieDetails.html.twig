@@ -3,7 +3,90 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-{% for sortie in sorties %}
+    <h3>Afficher une Sortie</h3>
+    <div class="row"></div>
+    <div class="col-12">
+        <div class="haut">
+            {% for sortie in sorties %}
+                <table class="table table-light container">
+                    <tr>
+                        <th scope="col">Nom de la sortie :</th>
+                        <td>{{ sortie.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Date et heure de la sortie :</th>
+                        <td>{{ sortie.dateHeureDebut | date('d/m/y') }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Date limite d'inscription</th>
+                        <td>{{ sortie.dateHeureDebut | date('d/m/y') }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Nombre de places</th>
+                        <td>{{ sortie.nbInscriptionsMax }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Durée</th>
+                        <td>{{ sortie.duree }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Description et infos</th>
+                        <td>{{ sortie.infosSortie }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Lieu</th>
+                        <td>{{ sortie.lieu.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Rue</th>
+                        <td>{{ sortie.lieu.rue }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Ville</th>
+                        <td>{{ sortie.lieu.ville.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Code Postal</th>
+                        <td>{{ sortie.lieu.ville.codePostal }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Latitude</th>
+                        <td>{{ sortie.lieu.latitude }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">Longitude</th>
+                        <td>{{ sortie.lieu.longitude }}</td>
+                    </tr>
+                </table>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container-sm">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-responsive-sm table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope="row">{{ user.pseudo }}</th>
+                        <td>{{ user.nom }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+            <div class="buttonUserDetails">
+                <a class="btn btn-primary buttonUserDetails" href="{{ path ('main') }}" role="button">Retour</a>
+            </div>
 
-{% endfor %}
+
 {% endblock %}

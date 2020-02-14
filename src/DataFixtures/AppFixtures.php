@@ -180,7 +180,7 @@ $manager->flush();
 
 
 
-        for($is = 0; $i < 30; $i++){
+        for($i = 0; $i < 30; $i++){
             $sortie = new Sortie();
 
 

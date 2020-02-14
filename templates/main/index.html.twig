@@ -35,14 +35,14 @@
                 <tbody class="tbody">
                 {% for sortie in sorties %}
                     <tr>
-                        <td>{{ sortie.nom }}</td>
+                        <td> {{ sortie.nom }}</a></td>
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
                         <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
                         <td>s</td>
                         <td><a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
-                        <td>Afficher</td>
+                        <td><a href="{{ path('sortieDetails', {'id': sortie.id }) }}">Afficher</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -64,7 +64,6 @@
                             <td>{{ sortie.nom }}</td>
                             <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
                             <td>{{ sortie.lieu.ville.nom }}</td>
-
                         </tr>
                     {% endfor %}
                     </tbody>
