@@ -85,4 +85,29 @@ class UserController extends AbstractController
         return $this->redirectToRoute('main');
     }
 
+
+    /**
+     * @Route("/Desinscription/{id}", name="desinscriptionSortie")
+     * @param EntityManagerInterface $em
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function desinscriptionSortie(EntityManagerInterface $em, $id){
+
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+        $user = $this->getUser();
+
+        $sortie->removeUser($user);
+        $em->persist($sortie);
+        $em->flush();
+
+        return $this->redirectToRoute('main');
+
+    }
+
+
+
+
+
+
 }

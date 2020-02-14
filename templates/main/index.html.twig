@@ -118,7 +118,7 @@
                             <td>Modifier - Annuler</td>
                         {% elseif app.user in sortie.users %}
                             {# Créer la méthode #}
-                            <td>Se désinscrire</td>
+                            <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}" > Se désinscrire </a></td>
                         {% else %}
                             <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
                         {% endif %}
