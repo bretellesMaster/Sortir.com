@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +48,61 @@ class SortieRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function filtre($filtre, $user)
+    {
+        dump($filtre['checkbox1']);
+
+        $qb = $this->createQueryBuilder('s');
+
+
+
+
+
+        if (!empty($filtre['site'])) {
+            $qb->where('s.site = :site')
+                ->setParameter('site', $filtre['site']);
+
+        }
+        if (!empty($filtre['search'])) {
+            $qb->andWhere('s.nom LIKE :search')
+                ->setParameter('search', '%' . $filtre['search'] . '%');
+        }
+        if (!empty($filtre['dateDebut']) && !empty($filtre['dateFin'])) {
+            $qb->andWhere('s.dateHeureDebut > :dateDebut')
+                ->andWhere('s.dateHeureDebut < :dateFin')
+                ->setParameter('dateDebut', $filtre['dateDebut'])
+                ->setParameter('dateFin', $filtre['dateFin']);
+        }
+
+        if($filtre['checkbox1'] == 1){
+            $qb->andWhere('s.organisateur = :user');
+            $qb->setParameter('user', $user);
+            dump($user);
+
+        }
+
+        if(!empty($filtre['checkbox2'])){
+
+
+        }
+
+        if(!empty($filtre['checkbox3'])){
+
+
+        }
+
+        if(!empty($filtre['checkbox4'])){
+
+
+        }
+        $query = $qb->getQuery();
+        $result = $query->execute();
+
+        return $result;
+
+
+    }
+
+
 }

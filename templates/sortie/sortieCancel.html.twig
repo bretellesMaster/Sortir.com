@@ -18,7 +18,7 @@
             </textarea>
         </div>
         <div>
-            <a class="btn btn-primary buttonUserDetails" href="{{ path("sortieCancel", {'id': sortie.id}) }}" role="button">Enregistrer</a>
+            <a class="btn btn-primary buttonUserDetails" name="publication" value="6" href="{{ path("sortieCancel", {'id': sortie.id}) }}" role="button">Enregistrer</a>
             <a class="btn btn-primary buttonUserDetails" href="{{ path("main") }}" role="button">Annuler</a>
 
     {% endfor %}
