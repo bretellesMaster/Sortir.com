@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Lieu;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\LieuType;
@@ -108,4 +109,40 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/sortieCancel.html.twig');
     }
+
+
+    /**
+     * @IsGranted("ROLE_USER")
+     * @Route("/main2", name="filtre")
+     * @param EntityManagerInterface $em
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function filtre(EntityManagerInterface $em, Request $request){
+       $rep = $em->getRepository(Sortie::class);
+       $sites = $em->getRepository(Site::class)->findAll();
+
+        $filtre = [
+            'search' => $request->get('search'),
+            'site' => $request->get('site'),
+            'dateDebut' => $request->get('dateDebut'),
+            'dateFin' => $request->get('dateFin'),
+            'checkbox1' => $request->get('checkbox1'),
+            'checkbox2' => $request->get('checkbox2'),
+            'checkbox3' => $request->get('checkbox3'),
+            'checkbox4' => $request->get('checkbox4'),
+
+
+        ];
+        $user = $this->getUser();
+
+        $sorties = $rep->filtre($filtre, $user);
+
+        return $this->render('main/index.html.twig', [
+            'sorties' => $sorties,
+            'sites'=>$sites
+
+            ]);
+    }
+
 }

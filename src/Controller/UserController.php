@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Etat;
+use App\Entity\Sortie;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Form\UserType;
@@ -51,5 +53,43 @@ class UserController extends AbstractController
         return $this->render('user/userDetails.html.twig', ["user" => $user]);
     }
 
+
+    /**
+     * @Route("/Inscription/{id}", name="inscriptionSortie")
+     * @param EntityManagerInterface $em
+     * @param $id
+     */
+    public function inscriptionSortie(EntityManagerInterface $em, $id){
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+
+        $user = $this->getUser();
+        dump($user);
+
+        if ($sortie->getUsers()->contains($user)){
+            $this->addFlash("danger", "Vous êtes déjà inscrit");
+
+        }
+
+        if ($sortie->getUsers()->count() <= $sortie->getNbInscriptionsMax()) {
+            $sortie->addUser($user);
+            $em->persist($sortie);
+            $em->flush();
+
+
+
+        }
+        elseif($sortie->getUsers()->count() == $sortie->getNbInscriptionsMax()){
+            $etat = $em->getRepository(Etat::class)->find(3);
+            $sortie->setEtat($etat);
+            $this->addFlash("danger", 'Sortie complète');
+
+
+        }else{
+
+
+        }
+        return $this->redirectToRoute('main');
+
+    }
 
 }
