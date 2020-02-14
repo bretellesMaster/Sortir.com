@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuler une sortie{% endblock %}
+
+{% block body %}
+
+    <h2 class=text-center>Annuler une sortie</h2>
+
+    {% for sortie in sorties %}
+
+        <div>
+            <p>Nom de la sortie : {{ sortie.nom }}</p>
+            <p>Date de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
+            <p>Site organisateur : {{ sortie.site }}</p>
+            <p>Lieu : {{ sortie.lieu.ville.nom }} </p>
+            <p>Motif : </p>
+            <textarea id="motif" name="motif" rows="5" cols="33">
+            </textarea>
+        </div>
+        <div>
+            <a class="btn btn-primary buttonUserDetails" href="{{ path("sortieCancel", {'id': sortie.id}) }}" role="button">Enregistrer</a>
+            <a class="btn btn-primary buttonUserDetails" href="{{ path("main") }}" role="button">Annuler</a>
+
+    {% endfor %}
+
+{% endblock %}

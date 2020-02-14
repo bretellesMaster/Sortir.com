@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class Ville
      * @ORM\Column(type="integer")
      */
     private $codePostal;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieu", mappedBy="ville")
+     */
+    private $lieux;
+
+    public function __construct()
+    {
+        $this->lieux = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +63,41 @@ class Ville
     public function setCodePostal(int $codePostal): self
     {
         $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Lieu[]
+     */
+    public function getLieu(): Collection
+    {
+        return $this->lieux;
+    }
+
+    public function addLieu(Lieu $lieu): self
+    {
+
+        if (!$this->lieux->contains($lieu)) {
+            $this->lieux[] = $lieu;
+            $lieu->setVilles($this);
+
+        }
+
+        return $this;
+    }
+
+    public function removeLieu(Lieu $lieu): self
+    {
+        if ($this->lieux->contains($lieu)) {
+            $this->lieux->removeElement($lieu);
+            // set the owning side to null (unless already changed)
+
+            if ($lieu->getVilles() === $this) {
+                $lieu->setVilles(null);
+
+            }
+        }
 
         return $this;
     }

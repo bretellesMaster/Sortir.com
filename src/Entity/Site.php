@@ -23,14 +23,21 @@ class Site
      */
     private $nom;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site")
+     */
+    private $user;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="site")
      */
-    private $sorties;
-    
+    private $sortie;
+
     public function __construct()
     {
-        $this->sorties = new ArrayCollection();
+        $this->user = new ArrayCollection();
+        $this->sortie = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,33 +58,72 @@ class Site
     }
 
     /**
-     * @return Collection|Sortie[]
+     * @return Collection|User[]
      */
-    public function getSorties(): Collection
+    public function getUser(): Collection
     {
-        return $this->sorties;
+        return $this->user;
     }
 
-    public function addSorty(Sortie $sorty): self
+    public function addUser(User $user): self
     {
-        if (!$this->sorties->contains($sorty)) {
-            $this->sorties[] = $sorty;
-            $sorty->setSite($this);
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setSite($this);
         }
 
         return $this;
     }
 
-    public function removeSorty(Sortie $sorty): self
+    public function removeUser(User $user): self
     {
-        if ($this->sorties->contains($sorty)) {
-            $this->sorties->removeElement($sorty);
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
             // set the owning side to null (unless already changed)
-            if ($sorty->getSite() === $this) {
-                $sorty->setSite(null);
+            if ($user->getSite() === $this) {
+                $user->setSite(null);
             }
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getSortie(): Collection
+    {
+        return $this->sortie;
+    }
+
+    public function addSortie(Sortie $sortie): self
+    {
+        if (!$this->sortie->contains($sortie)) {
+            $this->sortie[] = $sortie;
+            $sortie->setSite($this);
+
+        }
+
+        return $this;
+    }
+
+    public function removeSortie(Sortie $sortie): self
+    {
+        if ($this->sortie->contains($sortie)) {
+            $this->sortie->removeElement($sortie);
+            // set the owning side to null (unless already changed)
+            if ($sortie->getSite() === $this) {
+                $sortie->setSite(null);
+
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+     return $this->getNom();
+    }
+
 }

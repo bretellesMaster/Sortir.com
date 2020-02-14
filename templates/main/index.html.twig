@@ -3,18 +3,74 @@
 {% block title %}Hello MainController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="container">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/klevigou2019/Documents/leGit/Sortir.com/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/klevigou2019/Documents/leGit/Sortir.com/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>
-</div>
+
+        <div class="filtres" style="border: 1px solid black; margin-bottom: 20px">
+            <h2>Filtrer les sorties</h2>
+
+            <form>
+                <label>Site :</label>
+                <input type="text">
+
+            </form>
+
+        </div>
+
+        <div class="tableauSortie d-none d-lg-block">
+            <table class="table table-hover table-light table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nom de l'Évènement</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Clôture inscription</th>
+                    <th scope="col">Nombre d'inscrit</th>
+                    <th scope="col">État</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="tbody">
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                        <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                        <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                        <td>s</td>
+                        <td><a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                        <td>Afficher<a href="{{ path('sortieCancel', {'id': sortie.id}) }}">Annuler</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            <div class="tableauSortie2 d-block d-lg-none ">
+                <table class="table table-hover table-light table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Nom de l'Évènement</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Lieu</th>
+
+                    </tr>
+                    </thead>
+                    <tbody class="tbod">
+                    {% for sortie in sorties %}
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                            <td>{{ sortie.lieu.ville.nom }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+        </div>
+    </div>
 {% endblock %}

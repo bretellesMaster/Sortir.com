@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <h3> Details profil</h3>
+
+    <table class="table table-light container">
+        <tr>
+            <td><img src="/img/userProfil.png"></td>
+            <td><h1>{{ user.pseudo }}</h1></td>
+        </tr>
+        <tr>
+            <th scope="col">Prénom :</th>
+            <td>{{ user.prenom }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Nom :</th>
+            <td>{{ user.nom }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Téléphone :</th>
+            <td>{{ user.telephone }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Email :</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Site de rattachement :</th>
+            <td>{{ user.site }}</td>
+        </tr>
+    </table>
+
+    <a class="btn btn-primary buttonUserDetails" href="{{path ('main')}}" role="button">Retour</a>
+
+
+
+{% endblock %}

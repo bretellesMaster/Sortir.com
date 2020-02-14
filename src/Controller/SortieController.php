@@ -1,0 +1,139 @@
+<?php
+
+namespace App\Controller;
+
+
+use App\Entity\Etat;
+use App\Entity\Lieu;
+use App\Entity\Sortie;
+use App\Entity\User;
+use App\Entity\Ville;
+use App\Form\LieuType;
+use App\Form\SortieCancelType;
+use App\Form\SortieType;
+use App\Form\VilleType;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class SortieController extends AbstractController
+{
+    /**
+     * @Route("/Sortie/Create", name="sortieCreate")
+     * @IsGranted("ROLE_USER")
+     */
+    public function sortieCreate(EntityManagerInterface $em, Request $request)
+    {
+
+        $sortie = new Sortie();
+
+        $lieu = new Lieu();
+        $ville = new Ville();
+
+
+        $sortieForm = $this->createForm(SortieType::class, $sortie);
+
+
+        $sortieForm->handleRequest($request);
+
+
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            $nomVille = $sortieForm->get('ville')->getViewData();
+            $codePostal = $sortieForm->get('codePostal')->getViewData();
+            $nomLieu = $sortieForm->get('nomLieu')->getViewData();
+            $rueLieu = $sortieForm->get('rueLieu')->getViewData();
+            $latitude = $sortieForm->get('latitude')->getViewData();
+            $longitude = $sortieForm->get('longitude')->getViewData();
+
+
+            $ville->setNom($nomVille);
+            $ville->setCodePostal($codePostal);
+            $lieu->setNom($nomLieu);
+            $lieu->setLatitude($latitude);
+            $lieu->setLongitude($longitude);
+            $lieu->setRue($rueLieu);
+            $lieu->setVille($ville);
+            $sortie->setLieu($lieu);
+
+
+            $sortie->setSite($this->getUser()->getSite());
+            $sortie->setOrganisateur($this->getUser());
+
+            $em->persist($ville);
+            $em->persist($lieu);
+            $em->persist($sortie);
+
+            $em->flush();
+
+
+            $this->addFlash('success', "Has been added !");
+            return $this->redirectToRoute("main");
+        }
+
+        return $this->render('sortie/sortieCreate.html.twig',
+            [
+                "sortieForm" => $sortieForm->createView(),
+            ]);
+    }
+
+    /**
+     * @Route("/Sortie/Details/{id}", name="sortieDetails")
+     * @IsGranted("ROLE_USER")
+     */
+    public function sortieDetails(EntityManagerInterface $em)
+    {
+        $sortieRepository = $em->getRepository(Sortie::class);
+        $sorties = $sortieRepository->findAll();
+        return $this->render('sortie/sortieDetails.html.twig',
+            ["sorties" => $sorties]);
+    }
+
+    /**
+     * @Route("/Sortie/Modif/{id}", name="sortieModif")
+     * @IsGranted("ROLE_USER")
+     */
+    public function sortieModif()
+    {
+        return $this->render('sortie/sortieModif.html.twig');
+    }
+
+    /**
+     * @Route("/Sortie/Cancel/{id}", name="sortieDetailCancel")
+     * @IsGranted("ROLE_USER")
+     */
+    public function sortieDetailCancel(EntityManagerInterface $em, Request $request, $id)
+    {
+        $sortieRepository = $em->getRepository(Sortie::class);
+        $sorties = $sortieRepository->findBy(["id" => $id]);
+
+        return $this->render('sortie/sortieCancel.html.twig',
+            ["sorties" => $sorties]);
+
+    }
+
+    /**
+     * @Route("/Sortie/Cancel/{id}", name="sortieCancel")
+     * @IsGranted("ROLE_USER")
+     */
+    public function sortieCancel(EntityManagerInterface $em, Request $request, $id)
+    {
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+        $etat = $em->getRepository(Etat::class)->find($id);
+
+        $sortie->setEtat($etat);
+
+        $em->persist($sortie);
+        $em->flush();
+
+        $this->addFlash('success', "Sortie cancel !");
+        return $this->redirectToRoute("main");
+    }
+
+}
+
