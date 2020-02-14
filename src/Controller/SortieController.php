@@ -151,22 +151,20 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/Sortie/Cancel/{id}", name="sortieCancel")
+     * @Route("/Sortie/Cancel2/{id}", name="sortieCancel")
      * @IsGranted("ROLE_USER")
      */
-
     public function sortieCancel(EntityManagerInterface $em, Request $request, $id)
     {
-        $etat = new Etat();
-        $sortie = new Sortie();
+        $sortie = $em->getRepository(Sortie::class)->find($id);
         $etat = $em->getRepository(Etat::class)->find(6);
         $sortie->setEtat($etat);
-
 
         $em->persist($sortie);
         $em->flush();
 
         $this->addFlash('success', "Sortie cancel !");
+
         return $this->redirectToRoute("main");
     }
 
