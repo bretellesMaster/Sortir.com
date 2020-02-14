@@ -4,8 +4,8 @@
 }
 
 .buttonUserDetails {
-
-    margin: auto;
+    text-align: center;
+    margin-top: 2em;
 }
 
 body {
@@ -85,6 +85,10 @@ h2 {
     border: 1px solid #e3e3e3;
 }
 
+.SortieDetails {
+    text-align: center;
+
+}
 
 /*font-family: 'Raleway', sans-serif;*/
 /*font-family: 'Berkshire Swash', cursive;*/

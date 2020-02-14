@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
+use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\LieuType;
 use App\Form\SortieType;
@@ -38,12 +39,12 @@ class SortieController extends AbstractController
 
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-           $nomVille = $sortieForm->get('ville')->getViewData();
-           $codePostal = $sortieForm->get('codePostal')->getViewData();
-           $nomLieu = $sortieForm->get('nomLieu')->getViewData();
-           $rueLieu = $sortieForm->get('rueLieu')->getViewData();
-           $latitude = $sortieForm->get('latitude')->getViewData();
-           $longitude = $sortieForm->get('longitude')->getViewData();
+            $nomVille = $sortieForm->get('ville')->getViewData();
+            $codePostal = $sortieForm->get('codePostal')->getViewData();
+            $nomLieu = $sortieForm->get('nomLieu')->getViewData();
+            $rueLieu = $sortieForm->get('rueLieu')->getViewData();
+            $latitude = $sortieForm->get('latitude')->getViewData();
+            $longitude = $sortieForm->get('longitude')->getViewData();
 
 
             $ville->setNom($nomVille);
@@ -54,7 +55,6 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-
 
 
             $sortie->setSite($this->getUser()->getSite());
@@ -81,12 +81,21 @@ class SortieController extends AbstractController
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieDetails(EntityManagerInterface $em)
+    public function sortieDetails($id, EntityManagerInterface $em)
     {
+        $userRepository = $em->getRepository(User::class);
+        $users = $userRepository->findBy(['id' => $id]);
         $sortieRepository = $em->getRepository(Sortie::class);
-        $sorties = $sortieRepository->findAll();
+        $sorties = $sortieRepository->findById(['id' => $id]);
+        $lieuRepository = $em->getRepository(Lieu::class);
+        $lieux = $lieuRepository->findById(['id' => $id]);
+        $villeRepository = $em->getRepository(Ville::class);
+        $villes = $villeRepository->findById(['id' => $id]);
         return $this->render('sortie/sortieDetails.html.twig',
-            ["sorties" => $sorties]);
+            ["sorties" => $sorties,
+                'users' => $users,
+                'ville' => $villes,
+                'lieu' => $lieux]);
     }
 
     /**
@@ -103,7 +112,7 @@ class SortieController extends AbstractController
      * @Route("/Sortie/Cancel{id}", name="sortieCancel")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieCancel()
+    public function sortieCancel($id,EntityManagerInterface $em)
     {
 
 

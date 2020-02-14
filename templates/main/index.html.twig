@@ -104,6 +104,7 @@
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
                         <td>{{ sortie.etat.libelle }}</td>
                         <td>s</td>
+
                         <td>
                             <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
@@ -117,6 +118,7 @@
                         {% else %}
                             <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
                         {% endif %}
+
 
 
 
@@ -152,9 +154,23 @@
                         <td>{{ sortie.lieu.ville.nom }}</td>
 
                     </tr>
+<<<<<<< HEAD
                 {% endfor %}
                 </tbody>
             </table>
+=======
+                    </thead>
+                    <tbody class="tbod">
+                    {% for sortie in sorties %}
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                            <td>{{ sortie.lieu.ville.nom }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+>>>>>>> 2a5c328f455ad5ade72f6701debb9d5787387261
 
 
         </div>
