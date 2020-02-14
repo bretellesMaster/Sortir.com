@@ -5,5 +5,16 @@
 {% block body %}
 
 
+    {% for sortie in sorties %}
+        <p>{sortie.nom}</p>
+    {% endfor %}
+
+    {% for ville in villes %}
+        <p>{ville.nom}</p>
+    {% endfor %}
+
+    {% for lieu in lieux %}
+        <p>lieu.nom</p>
+    {% endfor %}
 
 {% endblock %}

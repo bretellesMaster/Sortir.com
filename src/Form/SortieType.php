@@ -47,8 +47,7 @@ class SortieType extends AbstractType
             ])
             ->add('codePostal', TextType::class, [
                 'mapped'=>false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

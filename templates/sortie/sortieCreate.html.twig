@@ -3,6 +3,7 @@
 {% block title %}Créer un Sortie{% endblock %}
 
 {% block body %}
+
     <div class="container">
 
         {{ form_start(sortieForm) }}
@@ -10,16 +11,15 @@
         {{ form_widget(sortieForm) }}
 
         <div>
-            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <button class="btn btn-primary" type="submit" id="publication" name="publication" value="1" >Enregistrer</button>
 
-            <button class="btn btn-primary" type="submit" name="publication" value="1">Publier la sortie</button>
+            <button class="btn btn-primary" type="submit" id="publication" name="publication" value="2">Publier la sortie</button>
 
             <a class="btn btn-primary" href="{{ path('main') }}" role="button">Annuler</a>
         </div>
         {{ form_end(sortieForm) }}
-
-
     </div>
+
 {% endblock %}
 
 

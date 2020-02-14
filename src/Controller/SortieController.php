@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/Sortie/Create", name="sortieCreate")
+     * @Route("/Sortie/Create/", name="sortieCreate")
      * @IsGranted("ROLE_USER")
      * @param EntityManagerInterface $em
      * @param Request $request
@@ -29,25 +29,24 @@ class SortieController extends AbstractController
     {
 
         $sortie = new Sortie();
-        $etat = new Etat();
         $lieu = new Lieu();
         $ville = new Ville();
+        $etat = new Etat();
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
         $sortieForm->handleRequest($request);
 
-
-        $etat->setLibelle('Créée');
-
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-           $nomVille = $sortieForm->get('ville')->getViewData();
-           $codePostal = $sortieForm->get('codePostal')->getViewData();
-           $nomLieu = $sortieForm->get('nomLieu')->getViewData();
-           $rueLieu = $sortieForm->get('rueLieu')->getViewData();
-           $latitude = $sortieForm->get('latitude')->getViewData();
-           $longitude = $sortieForm->get('longitude')->getViewData();
 
+            $publication = $request->get('publication');
+
+            $nomVille = $sortieForm->get('ville')->getViewData();
+            $codePostal = $sortieForm->get('codePostal')->getViewData();
+            $nomLieu = $sortieForm->get('nomLieu')->getViewData();
+            $rueLieu = $sortieForm->get('rueLieu')->getViewData();
+            $latitude = $sortieForm->get('latitude')->getViewData();
+            $longitude = $sortieForm->get('longitude')->getViewData();
 
             $ville->setNom($nomVille);
             $ville->setCodePostal($codePostal);
@@ -57,8 +56,14 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-            $etat->setLibelle('Ouverte');
 
+            if ($publication == 1) {
+                $etat = $em->getRepository(Etat::class)->find(1);
+                $sortie->setEtat($etat);
+            } elseif ($publication == 2) {
+                $etat = $em->getRepository(Etat::class)->find(2);
+                $sortie->setEtat($etat);
+            }
 
             $sortie->setSite($this->getUser()->getSite());
             $sortie->setOrganisateur($this->getUser());
@@ -69,12 +74,9 @@ class SortieController extends AbstractController
 
             $em->flush();
 
-
             $this->addFlash('success', "Has been added !");
             return $this->redirectToRoute("main");
         }
-
-
 
         return $this->render('sortie/sortieCreate.html.twig',
             [
@@ -86,21 +88,38 @@ class SortieController extends AbstractController
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieDetails(EntityManagerInterface $em)
+    public function sortieDetails(EntityManagerInterface $em, $id=null)
     {
         $sortieRepository = $em->getRepository(Sortie::class);
-        $sorties = $sortieRepository->findAll();
-        return $this->render('sortie/sortieDetails.html.twig',
+        if ($id !=null){
+            $sorties = $sortieRepository->find($id);
+            return $this->render('sortie/sortieDetails.html.twig',
             ["sorties" => $sorties]);
+        }
+        $sorties = $sortieRepository->findAll();
+        return $this->redirectToRoute("main");
     }
 
     /**
      * @Route("/Sortie/Modif/{id}", name="sortieModif")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieModif()
+    public function sortieModif(EntityManagerInterface $em, Request $request, $id)
     {
-        return $this->render('sortie/sortieModif.html.twig');
+        $sortieRepository = $em->getRepository(Sortie::class);
+        $sorties = $sortieRepository->find($id);
+
+        $villeRepository = $em->getRepository(Ville::class);
+        $villes = $villeRepository->find($id);
+
+        $lieuRepository = $em->getRepository(Lieu::class);
+        $lieux = $lieuRepository->find($id);
+
+        return $this->render('sortie/sortieModif.html.twig',
+            ["sorties"=> $sorties],
+            ["villes"=> $villes],
+            ["lieux"=> $lieux],
+        );
     }
 
 
@@ -110,8 +129,6 @@ class SortieController extends AbstractController
      */
     public function sortieCancel()
     {
-
-
         return $this->render('sortie/sortieCancel.html.twig');
     }
 }
