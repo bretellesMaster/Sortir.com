@@ -121,7 +121,7 @@
 
                         {#7#}
                         <td>
-                            <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                            <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
 
                         {#8#}
@@ -134,7 +134,6 @@
                             {% else %}
                             <p><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></p></td>
                         {% endif %}
-
                     </tr>
                 {% endfor %}
                 </tbody>
