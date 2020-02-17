@@ -108,7 +108,7 @@ class SortieController extends AbstractController
         $villeRepository = $em->getRepository(Ville::class);
         $villes = $villeRepository->findById(['id' => $id]);
         return $this->render('sortie/sortieDetails.html.twig',
-            ["sorties" => $sorties,
+            ['sorties' => $sorties,
                 'users' => $users,
                 'ville' => $villes,
                 'lieu' => $lieux]);
