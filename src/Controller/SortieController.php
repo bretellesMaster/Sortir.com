@@ -9,9 +9,7 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Entity\Ville;
-use App\Form\LieuType;
 use App\Form\SortieType;
-use App\Form\VilleType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,6 +82,7 @@ class SortieController extends AbstractController
             [
                 "sortieForm" => $sortieForm->createView(),
             ]);
+
     }
 
     /**
@@ -113,20 +112,24 @@ class SortieController extends AbstractController
      */
     public function sortieModif(EntityManagerInterface $em, Request $request, $id)
     {
-//        $sortieRepository = $em->getRepository(Sortie::class);
-//        $sorties = $sortieRepository->find($id);
-//
-//        $villeRepository = $em->getRepository(Ville::class);
-//        $villes = $villeRepository->find($id);
-//
-//        $lieuRepository = $em->getRepository(Lieu::class);
-//        $lieux = $lieuRepository->find($id);
-//
-//        return $this->render('sortie/sortieModif.html.twig',
-//            ["sorties"=> $sorties],
-//            ["villes"=> $villes],
-//            ["lieux"=> $lieux],
-//        );
+
+        $repo = $em->getRepository(Sortie::class);
+        $sortie = $repo->find($id);
+
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $em->flush();
+
+            $this->addFlash("success", "modification effectuée");
+            return $this->redirectToRoute('main', ['id' => $id]);
+        }
+
+        return $this->render('sortie/sortieModif.html.twig',[
+            'sortieForm'=> $form->createView(),
+            'sortie'=> $sortie,
+        ]);
     }
 
 
