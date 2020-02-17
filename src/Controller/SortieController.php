@@ -139,7 +139,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         //TRAITEMENT
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             //Definition Etat
             $publication = $request->get('publication');
             if ($publication == 1) {
@@ -158,9 +158,9 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('main', ['id' => $id]);
         }
 
-        return $this->render('sortie/sortieModif.html.twig',[
-            'sortieForm'=> $form->createView(),
-            'sortie'=> $sortie,
+        return $this->render('sortie/sortieModif.html.twig', [
+            'sortieForm' => $form->createView(),
+            'sortie' => $sortie,
         ]);
     }
 
@@ -170,6 +170,7 @@ class SortieController extends AbstractController
      */
     public function sortieDetailCancel(EntityManagerInterface $em, Request $request, $id)
     {
+
         $sortieRepository = $em->getRepository(Sortie::class);
         $sorties = $sortieRepository->findBy(["id" => $id]);
 
