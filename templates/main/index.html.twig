@@ -7,13 +7,13 @@
 
     <div class="container">
 
-
-        <div class="filtres" >
+        {# --------------------- TRAITEMENT DES FILTRES --------------------- #}
+        <div class="filtres">
             <h2>Filtrer les sorties</h2>
 
-            <form class="col-12 row" method="get" action="{{path('filtre')}}">
+            <form class="col-12 row" method="get" action="{{ path('filtre') }}">
                 <div class="gauche col-6 row">
-                    <div class="form-group row col-12" >
+                    <div class="form-group row col-12">
                         <label for="inputEmail3" class="col-sm-6 col-form-label">Site : </label>
                         <div class="col-sm-6">
                             <select class="form-control" name="site">
@@ -41,11 +41,10 @@
                             <input type="date" class="form-control" id="inputDate2" name="dateFin">
                         </div>
                     </div>
-
-
                 </div>
 
 
+                {# --------------------- CHECKBOX POUR LES FILTRES --------------------- #}
                 <div class="milieu col-4 row">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="checkbox1">
@@ -75,12 +74,12 @@
                 </div>
                 <div class="droite col-2">
                     <button type="submit" class="btn btn-lg btn-primary">Rechercher</button>
-
                 </div>
             </form>
-
         </div>
 
+
+        {# --------------------- TABLEAU POUR ECRAN ORDINATEUR --------------------- #}
         <div class="tableauSortie d-none d-lg-block">
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
@@ -90,7 +89,7 @@
                     <th scope="col">Clôture inscription</th>
                     <th scope="col">Nombre d'inscrit</th>
                     <th scope="col">État</th>
-                    <th scope="col">Inscrit</th>
+{#                    <th scope="col">Inscrit</th>#}
                     <th scope="col">Organisateur</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -98,47 +97,44 @@
                 <tbody class="tbody">
                 {% for sortie in sorties %}
                     <tr>
-                        <td>{{ sortie.nom }}</td>
+                        {% if (app.user == sortie.organisateur) %}
+                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+                        {% else %}
+                            <td>{{ sortie.nom }}</td>
+                        {% endif %}
+
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
                         <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
+
                         <td>{{ sortie.etat.libelle }}</td>
                         {% if app.user in sortie.users %}
                         <td>X</td>
                             {% else %}
                             <td> </td>
                         {% endif %}
+
                         <td>
                             <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
-
+                        <td>{{ sortie.etat.libelle }}</td>
 
                         {% if sortie.organisateur.id == app.user.id %}
-                        <td>Modifier - Annuler</td>
-                            {% elseif app.user in sortie.users %}
-                                {# Créer la méthode #}
-                                <td>Se désinscrire</td>
+                            <td>Modifier - Annuler</td>
+                        {% elseif app.user in sortie.users %}
+                            {# Créer la méthode #}
+                            <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}" > Se désinscrire </a></td>
                         {% else %}
                             <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
                         {% endif %}
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+
+
+        {# --------------------- TABLEAU POUR PETIT ECRAN --------------------- #}
         <div class="tableauSortie2 d-block d-lg-none ">
             <table class="table table-hover table-light table-striped">
                 <thead class="thead-dark">
@@ -148,6 +144,7 @@
                     <th scope="col">Lieu</th>
 
                 </tr>
+
 
                     </thead>
                     <tbody class="tbod">
@@ -163,6 +160,27 @@
 
 
 
+            </thead>
+            <tbody class="tbod">
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                    <td>{{ sortie.lieu.ville.nom }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+
         </div>
+
+
     </div>
+
+    {# --------------------- BOUTON CREATION D'UNE NOUVELLE SORTIE --------------------- #}
+    <div>
+        <a class="btn btn-primary" href="{{ path('sortieCreate') }}" role="button">Créer une sortie </a>
+    </div>
+
+
 {% endblock %}

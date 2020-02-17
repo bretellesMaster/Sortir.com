@@ -22,6 +22,8 @@ class MainController extends AbstractController
         $sites = $em->getRepository(Site::class)->findAll();
 
 
+//        dump($sorties);die();
+
         return $this->render('main/index.html.twig', [
             'sorties' => $sorties,
             'sites'=>$sites,

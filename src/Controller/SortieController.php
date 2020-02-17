@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Site;
 use App\Entity\Sortie;
@@ -20,32 +21,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/Sortie/Create", name="sortieCreate")
+     * @Route("/Sortie/Create/", name="sortieCreate")
      * @IsGranted("ROLE_USER")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function sortieCreate(EntityManagerInterface $em, Request $request)
     {
 
         $sortie = new Sortie();
-
         $lieu = new Lieu();
         $ville = new Ville();
-
+        $etat = new Etat();
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
-
         $sortieForm->handleRequest($request);
 
-
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+            $publication = $request->get('publication');
+
             $nomVille = $sortieForm->get('ville')->getViewData();
             $codePostal = $sortieForm->get('codePostal')->getViewData();
             $nomLieu = $sortieForm->get('nomLieu')->getViewData();
             $rueLieu = $sortieForm->get('rueLieu')->getViewData();
             $latitude = $sortieForm->get('latitude')->getViewData();
             $longitude = $sortieForm->get('longitude')->getViewData();
-
 
             $ville->setNom($nomVille);
             $ville->setCodePostal($codePostal);
@@ -56,6 +59,13 @@ class SortieController extends AbstractController
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
 
+            if ($publication == 1) {
+                $etat = $em->getRepository(Etat::class)->find(1);
+                $sortie->setEtat($etat);
+            } elseif ($publication == 2) {
+                $etat = $em->getRepository(Etat::class)->find(2);
+                $sortie->setEtat($etat);
+            }
 
             $sortie->setSite($this->getUser()->getSite());
             $sortie->setOrganisateur($this->getUser());
@@ -65,7 +75,6 @@ class SortieController extends AbstractController
             $em->persist($sortie);
 
             $em->flush();
-
 
             $this->addFlash('success', "Has been added !");
             return $this->redirectToRoute("main");
@@ -102,9 +111,22 @@ class SortieController extends AbstractController
      * @Route("/Sortie/Modif/{id}", name="sortieModif")
      * @IsGranted("ROLE_USER")
      */
-    public function sortieModif()
+    public function sortieModif(EntityManagerInterface $em, Request $request, $id)
     {
-        return $this->render('sortie/sortieModif.html.twig');
+//        $sortieRepository = $em->getRepository(Sortie::class);
+//        $sorties = $sortieRepository->find($id);
+//
+//        $villeRepository = $em->getRepository(Ville::class);
+//        $villes = $villeRepository->find($id);
+//
+//        $lieuRepository = $em->getRepository(Lieu::class);
+//        $lieux = $lieuRepository->find($id);
+//
+//        return $this->render('sortie/sortieModif.html.twig',
+//            ["sorties"=> $sorties],
+//            ["villes"=> $villes],
+//            ["lieux"=> $lieux],
+//        );
     }
 
 
@@ -114,10 +136,9 @@ class SortieController extends AbstractController
      */
     public function sortieCancel($id,EntityManagerInterface $em)
     {
-
-
         return $this->render('sortie/sortieCancel.html.twig');
     }
+
 
 
     /**
@@ -140,7 +161,6 @@ class SortieController extends AbstractController
             'checkbox2' => $request->get('checkbox2'),
             'checkbox3' => $request->get('checkbox3'),
             'checkbox4' => $request->get('checkbox4'),
-
 
         ];
         $user = $this->getUser();

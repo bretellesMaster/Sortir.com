@@ -6,7 +6,7 @@
 
     <h3> Details profil</h3>
 
-    <table class="table table-light container">
+    <table class="userTable table table-borderless">
         <tr>
             <td><img src="/img/userProfil.png"></td>
             <td><h1>{{ user.pseudo }}</h1></td>
@@ -31,10 +31,9 @@
             <th scope="col">Site de rattachement :</th>
             <td>{{ user.site }}</td>
         </tr>
+        <tr>
+           <td> <a class="btn btn-primary buttonUserDetails" href="{{path ('main')}}" role="button">Retour</a></td>
+        </tr>
     </table>
-<div class="buttonUserDetails">
-    <a class="btn btn-primary " href="{{path ('main')}}" role="button">Retour</a>
-</div>
-
 
 {% endblock %}

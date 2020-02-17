@@ -58,6 +58,7 @@ class UserController extends AbstractController
      * @Route("/Inscription/{id}", name="inscriptionSortie")
      * @param EntityManagerInterface $em
      * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function inscriptionSortie(EntityManagerInterface $em, $id){
         $sortie = $em->getRepository(Sortie::class)->find($id);
@@ -67,29 +68,46 @@ class UserController extends AbstractController
 
         if ($sortie->getUsers()->contains($user)){
             $this->addFlash("danger", "Vous êtes déjà inscrit");
-
         }
 
         if ($sortie->getUsers()->count() <= $sortie->getNbInscriptionsMax()) {
             $sortie->addUser($user);
             $em->persist($sortie);
             $em->flush();
-
-
-
         }
         elseif($sortie->getUsers()->count() == $sortie->getNbInscriptionsMax()){
             $etat = $em->getRepository(Etat::class)->find(3);
             $sortie->setEtat($etat);
             $this->addFlash("danger", 'Sortie complète');
-
-
         }else{
-
 
         }
         return $this->redirectToRoute('main');
+    }
+
+
+    /**
+     * @Route("/Desinscription/{id}", name="desinscriptionSortie")
+     * @param EntityManagerInterface $em
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function desinscriptionSortie(EntityManagerInterface $em, $id){
+
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+        $user = $this->getUser();
+
+        $sortie->removeUser($user);
+        $em->persist($sortie);
+        $em->flush();
+
+        return $this->redirectToRoute('main');
 
     }
+
+
+
+
+
 
 }
