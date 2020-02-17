@@ -99,7 +99,7 @@
                     <tr>
 
                         {#1#}
-                        <td>{{ sortie.nom }}</td>
+                        <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
 
                         {#2#}
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
@@ -110,29 +110,43 @@
                         {#4#}
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
 
-                        {#5#}
-                        <td>{{ sortie.etat }}</td>
 
-                        {#6#}
-                        <td>{% if app.user in sortie.users %}<p>X</p>
-                            {% else %}<p></p>
-                            {% endif %}
-                        </td>
+{# 5 #}
+                        <td>{{ sortie.etat.libelle }}</td>
 
-                        {#7#}
+
+                    {#6#}
+                        {% if app.user in sortie.users %}
+
+                        <td>X</td>
+
+                            {% else %}
+
+                            <td> </td>
+
+                        {% endif %}
+
+
+{#7#}
                         <td>
                             <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
 
-                        {#8#}
-                        <td><a href="{{ path('sortieDetails', {'id' : sortie.id}) }}">Afficher</a>
-                            {% if sortie.organisateur.id == app.user.id %}
-                            <p><a href="{{ path('sortieModif', {'id':sortie.id}) }}">Modifier</a> -
-                                <a href="{{ path('sortieDetailCancel', {'id': sortie.id}) }}">Annuler</a></p>
-                            {% elseif app.user in sortie.users %}
-                            <p><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a></p>
-                            {% else %}
-                            <p><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></p></td>
+
+
+                        {% if sortie.organisateur.id == app.user.id %}
+                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a> - Annuler</td>
+                        {% elseif app.user in sortie.users %}
+                            <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}" > Se désinscrire </a></td>
+                        {% else %}
+                            {% set nb = (sortie.users.count) %}
+
+                            {% if nb < sortie.nbInscriptionsMax %}
+                            <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
+                                {% else %}
+                                <td> </td>
+                                {% endif %}
+
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -151,18 +165,21 @@
                     <th scope="col">Lieu</th>
 
                 </tr>
-                </thead>
-                <tbody class="tbod">
-                {% for sortie in sorties %}
-                    <tr>
-                        <td>{{ sortie.nom }}</td>
-                        <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
-                        <td>{{ sortie.lieu.ville.nom }}</td>
 
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+
+                    </thead>
+                    <tbody class="tbod">
+                    {% for sortie in sorties %}
+                        <tr>
+                            <td>{{ sortie.nom }}</td>
+                            <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                            <td>{{ sortie.lieu.ville.nom }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
 
             </thead>
             <tbody class="tbod">

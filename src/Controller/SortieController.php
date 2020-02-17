@@ -102,19 +102,20 @@ class SortieController extends AbstractController
      */
     public function sortieDetails($id, EntityManagerInterface $em)
     {
-        $userRepository = $em->getRepository(User::class);
-        $users = $userRepository->findBy(['id' => $id]);
-        $sortieRepository = $em->getRepository(Sortie::class);
-        $sorties = $sortieRepository->findById(['id' => $id]);
-        $lieuRepository = $em->getRepository(Lieu::class);
-        $lieux = $lieuRepository->findById(['id' => $id]);
-        $villeRepository = $em->getRepository(Ville::class);
-        $villes = $villeRepository->findById(['id' => $id]);
-        return $this->render('sortie/sortieDetails.html.twig',
-            ['sorties' => $sorties,
-                'users' => $users,
-                'ville' => $villes,
-                'lieu' => $lieux]);
+        $sortie = $em->getRepository(Sortie::class)->find($id);
+
+        $users = $sortie->getUsers();
+
+
+
+
+
+        return $this->render('sortie/sortieDetails.html.twig', [
+                'sortie'=>$sortie,
+                'users'=>$users
+
+                ]);
+
     }
 
     /**

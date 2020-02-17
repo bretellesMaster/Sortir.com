@@ -64,23 +64,36 @@ class UserController extends AbstractController
         $sortie = $em->getRepository(Sortie::class)->find($id);
 
         $user = $this->getUser();
-        dump($user);
+        $nb = $sortie->getUsers()->count();
+        dump($nb);
+        dump($sortie->getNbInscriptionsMax());
 
         if ($sortie->getUsers()->contains($user)){
             $this->addFlash("danger", "Vous êtes déjà inscrit");
         }
 
-        if ($sortie->getUsers()->count() <= $sortie->getNbInscriptionsMax()) {
+        if ($sortie->getUsers()->count() < $sortie->getNbInscriptionsMax()) {
             $sortie->addUser($user);
             $em->persist($sortie);
+
             $em->flush();
+            $this->addFlash("success", 'Vous êtes bien inscrit à l\'évenement : '.$sortie->getNom());
         }
-        elseif($sortie->getUsers()->count() == $sortie->getNbInscriptionsMax()){
+        elseif($sortie->getUsers()->count()-1 == $sortie->getNbInscriptionsMax()){
             $etat = $em->getRepository(Etat::class)->find(3);
             $sortie->setEtat($etat);
-            $this->addFlash("danger", 'Sortie complète');
-        }else{
+            $em->persist($sortie);
 
+            $em->flush();
+            $this->addFlash("danger", 'Sortie complète');
+        }
+        else{
+            $etat = $em->getRepository(Etat::class)->find(3);
+            $sortie->setEtat($etat);
+            $em->persist($sortie);
+
+            $em->flush();
+            $this->addFlash("danger", "Sortie complète");
         }
         return $this->redirectToRoute('main');
     }
