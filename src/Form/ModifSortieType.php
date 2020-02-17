@@ -21,6 +21,8 @@ class ModifSortieType extends AbstractType
             ->add('nbInscriptionsMax')
             ->add('duree')
             ->add('infosSortie')
+
+            //rafraischir le lieu quand on le change
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom',

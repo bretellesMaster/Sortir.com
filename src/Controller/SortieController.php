@@ -115,22 +115,22 @@ class SortieController extends AbstractController
     public function sortieModif(EntityManagerInterface $em, Request $request, $id)
     {
 
-        $lieu = new Lieu();
-        $ville = new Ville();
-
         //SORTIE
         $repo = $em->getRepository(Sortie::class);
         $sortie = $repo->find($id);
 
+        //LIEU ET VILLE
+        $lieu = new Lieu();
+        $ville = new Ville();
         $lieu = $sortie->getLieu();
         $ville = $lieu->getVille();
 
+        //Création du formulaire
         $form = $this->createForm(ModifSortieType::class, $sortie);
         $form->handleRequest($request);
 
         //TRAITEMENT
         if ($form->isSubmitted() && $form->isValid()){
-
             //Definition Etat
             $publication = $request->get('publication');
             if ($publication == 1) {

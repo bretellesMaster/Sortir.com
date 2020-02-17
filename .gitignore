@@ -11,7 +11,6 @@
 
 composer.lock
 .idea
-.idea/dataSources.xml
 .env
 composer.lock
 
