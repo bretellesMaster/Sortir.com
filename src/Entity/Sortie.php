@@ -20,16 +20,23 @@ class Sortie
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Veuillez renseigner un nom !")
+     * @Assert\Length(
+     *     min="3", max="100",
+     *     minMessage="3 caractères minimum SVP !",
+     *     maxMessage="100 caractères maximum SVP !")
+     * @ORM\Column(type="string")
      */
     private $nom;
 
     /**
+     * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="integer")
      */
     private $duree;
