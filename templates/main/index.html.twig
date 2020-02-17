@@ -84,10 +84,10 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Nom de l'Évènement</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Clôture inscription</th>
-                    <th scope="col">Nombre d'inscrit</th>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Clôture</th>
+                    <th scope="col">Inscrits / Places</th>
                     <th scope="col">État</th>
                     <th scope="col">Inscrit</th>
                     <th scope="col">Organisateur</th>
@@ -97,23 +97,41 @@
                 <tbody class="tbody">
                 {% for sortie in sorties %}
                     <tr>
-                        <td>{{ sortie.nom }}</td>
+
+                        {#1#}
+                        <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+
+                        {#2#}
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+
+                        {#3#}
                         <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+
+                        {#4#}
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
 
 
+{# 5 #}
                         <td>{{ sortie.etat.libelle }}</td>
+
+
+                    {#6#}
                         {% if app.user in sortie.users %}
+
                         <td>X</td>
+
                             {% else %}
+
                             <td> </td>
+
                         {% endif %}
 
 
+{#7#}
                         <td>
-                            <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                            <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
+
 
 
                         {% if sortie.organisateur.id == app.user.id %}
@@ -128,6 +146,7 @@
                                 {% else %}
                                 <td> </td>
                                 {% endif %}
+
                         {% endif %}
                     </tr>
                 {% endfor %}

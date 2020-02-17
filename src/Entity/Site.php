@@ -23,6 +23,7 @@ class Site
      */
     private $nom;
 
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site")
      */
@@ -100,6 +101,7 @@ class Site
         if (!$this->sortie->contains($sortie)) {
             $this->sortie[] = $sortie;
             $sortie->setSite($this);
+
         }
 
         return $this;
@@ -112,6 +114,7 @@ class Site
             // set the owning side to null (unless already changed)
             if ($sortie->getSite() === $this) {
                 $sortie->setSite(null);
+
             }
         }
 

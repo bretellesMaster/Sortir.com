@@ -18,7 +18,7 @@ class MainController extends AbstractController
      */
     public function index(EntityManagerInterface $em)
     {
-        $sorties = $em->getRepository(Sortie::class)->findAll();
+        $sorties = $em->getRepository(Sortie::class)->getSortieOuverte();
         $sites = $em->getRepository(Site::class)->findAll();
 
 

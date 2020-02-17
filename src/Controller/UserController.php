@@ -77,7 +77,7 @@ class UserController extends AbstractController
             $em->persist($sortie);
 
             $em->flush();
-            $this->addFlash("danger", 'Nombres dinscrit : '.$nb);
+            $this->addFlash("success", 'Vous êtes bien inscrit à l\'évenement : '.$sortie->getNom());
         }
         elseif($sortie->getUsers()->count()-1 == $sortie->getNbInscriptionsMax()){
             $etat = $em->getRepository(Etat::class)->find(3);
