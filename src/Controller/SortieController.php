@@ -9,6 +9,8 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Entity\Ville;
+use App\Form\LieuType;
+use App\Form\ModifSortieType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -113,13 +115,34 @@ class SortieController extends AbstractController
     public function sortieModif(EntityManagerInterface $em, Request $request, $id)
     {
 
+        $lieu = new Lieu();
+        $ville = new Ville();
+
+        //SORTIE
         $repo = $em->getRepository(Sortie::class);
         $sortie = $repo->find($id);
 
-        $form = $this->createForm(SortieType::class, $sortie);
+        $lieu = $sortie->getLieu();
+        $ville = $lieu->getVille();
+
+        $form = $this->createForm(ModifSortieType::class, $sortie);
         $form->handleRequest($request);
 
+        //TRAITEMENT
         if ($form->isSubmitted() && $form->isValid()){
+
+            //Definition Etat
+            $publication = $request->get('publication');
+            if ($publication == 1) {
+                $etat = $em->getRepository(Etat::class)->find(1);
+                $sortie->setEtat($etat);
+            } elseif ($publication == 2) {
+                $etat = $em->getRepository(Etat::class)->find(2);
+                $sortie->setEtat($etat);
+            }
+
+            $em->persist($sortie);
+
             $em->flush();
 
             $this->addFlash("success", "modification effectuée");
