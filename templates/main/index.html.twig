@@ -131,8 +131,8 @@
                                 <a href="{{ path('sortieDetailCancel', {'id': sortie.id}) }}">Annuler</a></p>
                             {% elseif app.user in sortie.users %}
                             <p><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a></p>
-                            {% else %}
-                            <p><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></p></td>
+                            {% elseif  %}
+                            <p><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></p></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
