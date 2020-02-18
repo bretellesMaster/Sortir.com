@@ -151,9 +151,10 @@ $manager->flush();
         $lieux = $manager->getRepository(Lieu::class)->findAll();
         $orga = $manager->getRepository(User::class)->findAll();
         $sites = $manager->getRepository(Site::class)->findAll();
-        $etat = $manager->getRepository(Etat::class)->find(1);
-        $etat2 = $manager->getRepository(Etat::class)->find(2);
-        $etats = [$etat, $etat2];
+
+        $etatOuvert = $manager->getRepository(Etat::class)->find(1);
+        $etatCreer = $manager->getRepository(Etat::class)->find(2);
+        $etats = [$etatOuvert, $etatCreer];
         for($i=0; $i < 50; $i++){
             $sortie = new Sortie();
             $sortie->setNom('Sortie'.($i+1));
@@ -169,10 +170,6 @@ $manager->flush();
             $sortie->setInfosSortie($faker->sentence($nbWords = 6, $variableNbWords = true));
             $sortie->setNbInscriptionsMax(rand(1, 3));
             $manager->persist($sortie);
-
-
-
-
 
         }
 

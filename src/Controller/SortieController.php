@@ -49,6 +49,9 @@ class SortieController extends AbstractController
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
+
+
+
             $publication = $request->get('publication');
 
             $nomVille = $sortieForm->get('ville')->getViewData();
@@ -66,7 +69,9 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-
+            /*$etat->setId(6)
+             * $etat->setLibellé("Annulé");
+             * $sortie->setEtat($this);*/
 
             if ($publication == 1) {
                 $etat = $em->getRepository(Etat::class)->find(1);
@@ -80,10 +85,17 @@ class SortieController extends AbstractController
             $sortie->setSite($this->getUser()->getSite());
             $sortie->setOrganisateur($this->getUser());
 
+
+            if($sortie->getDateHeureDebut() < $sortie->getDateLimiteInscription()){
+                $this->addFlash('danger', 'Problème date');
+                return $this->redirectToRoute('sortieCreate', [
+                    'sortie'=>$sortie,
+                ]);
+
+            }
             $em->persist($ville);
             $em->persist($lieu);
             $em->persist($sortie);
-
             $em->flush();
 
             $this->addFlash('success', "Has been added !");

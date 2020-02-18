@@ -97,11 +97,13 @@
                 <tbody class="tbody">
                 {% for sortie in sorties %}
                     <tr>
+
                         {#1#}
                         <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
 
 
                         {#2#}
+
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
 
                         {#3#}
@@ -143,10 +145,12 @@
                             {% set nb = (sortie.users.count) %}
 
                             {% if nb < sortie.nbInscriptionsMax %}
-                                <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
-                            {% else %}
-                                <td></td>
-                            {% endif %}
+
+                            <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
+                                {% else %}
+                                <td><p class="cloture">Clôture des inscriptions</p></td>
+                                {% endif %}
+
 
                         {% endif %}
                     </tr>
