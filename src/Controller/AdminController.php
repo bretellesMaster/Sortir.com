@@ -2,28 +2,55 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
+use App\Entity\Site;
+use App\Entity\Ville;
+use App\Form\LieuType;
+use App\Form\VilleType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/adminLieux", name="adminLieux")
+     * @Route("/admin/adminListeLieux", name="adminListeLieux")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function adminLieux()
+    public function adminListelieux(EntityManagerInterface $em)
     {
-        return $this->render('admin/adminLieux.html.twig');
+        $villeRepo = $em->getRepository(Ville::class);
+        $villes = $villeRepo->findAll();
+
+        return $this->render('admin/adminListeLieux.html.twig',
+            ['villes' => $villes]);
     }
 
     /**
      * @IsGranted("ROLE_ADMIN")
-     * @Route("/adminSites", name="adminSites")
+     * @Route("/admin2", name="filtreAdmin")
+     * @param EntityManagerInterface $em
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function adminSites()
+    public function filtreAdmin (EntityManagerInterface $em, Request $request)
     {
-        return $this->render('admin/adminSites.html.twig');
+        $rep = $em->getRepository(Ville::class)->findAll();
+
+        $filter = [
+            'search' => $request->get('search'),
+        ];
+
+        $user = $this->getUser();
+
+        $villes = $rep->filtre($filter, $user);
+
+        return $this->render('admin/adminListeLieux.html.twig',
+            ['villes' => $villes]);
+
     }
 }

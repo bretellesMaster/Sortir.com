@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/tableauScroll.css') }}">{% endblock %}
+{% block title %}Gérer les lieux{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="filtres">
+            <h2>Gérer les lieux</h2>
+            <form method="get" action="{{ path('filtreAdmin') }}">
+                <div>
+                    <label for="inputSearch">Le nom contient: </label>
+                    <div>
+                        <input type="search" class="form-control" name="search">
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-lg btn-primary">Rechercher</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="tableauSortie d-none d-lg-block">
+            <table class="table table-hover table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Ville</th>
+                    <th scope="col">Code Postal</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="tbody">
+                {% for ville in villes %}
+                    <tr>
+                        <td>{{ ville.nom }}</td>
+                        <td>{{ ville.codePostal }}</td>
+                        <td><a href="">Modifier</a> - <a href="">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p><a href="">Ajouter</a></p>
+        </div>
+    </div>
+
+{% endblock %}

@@ -44,7 +44,7 @@
                 </div>
 
 
-                {# --------------------- CHECKBOX POUR LES FILTRES --------------------- #}
+              {# --------------------- CHECKBOX POUR LES FILTRES --------------------- #}
                 <div class="milieu col-4 row">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="checkbox1">
@@ -131,8 +131,8 @@
                                 <a href="{{ path('sortieDetailCancel', {'id': sortie.id}) }}">Annuler</a></p>
                             {% elseif app.user in sortie.users %}
                             <p><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a></p>
-                            {% elseif  %}
-                            <p><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></p></td>
+                            {% else  %}
+                            <a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
