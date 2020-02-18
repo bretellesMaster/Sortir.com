@@ -1,0 +1,27 @@
+table {
+    width: 100%;
+    display:block;
+}
+
+td{
+    width: 100%;
+}
+
+tbody {
+    height: 300px;
+
+    width: 100%;
+    overflow: auto;
+}
+thead, tbody{
+    display: block;
+}
+table {
+    width: 100%; /* Optional */
+}
+thead th{
+    width: 100%;
+}
+tbody td, thead th {
+    width: 9%;
+}

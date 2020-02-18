@@ -2,9 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +50,82 @@ class SortieRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function filtre($filtre, $user)
+    {
+
+
+        $qb = $this->createQueryBuilder('s');
+
+
+
+
+
+        if (!empty($filtre['site'])) {
+            $qb->where('s.site = :site')
+                ->setParameter('site', $filtre['site']);
+
+        }
+        if (!empty($filtre['search'])) {
+            $qb->andWhere('s.nom LIKE :search')
+                ->setParameter('search', '%' . $filtre['search'] . '%');
+        }
+        if (!empty($filtre['dateDebut']) && !empty($filtre['dateFin'])) {
+            $qb->andWhere('s.dateHeureDebut > :dateDebut')
+                ->andWhere('s.dateHeureDebut < :dateFin')
+                ->setParameter('dateDebut', $filtre['dateDebut'])
+                ->setParameter('dateFin', $filtre['dateFin']);
+        }
+
+        if($filtre['checkbox1'] == 1){
+            $qb->andWhere('s.organisateur = :user');
+            $qb->setParameter('user', $user);
+            dump($user);
+
+        }
+
+        if(!empty($filtre['checkbox2'])){
+
+
+        }
+
+        if(!empty($filtre['checkbox3'])){
+
+
+        }
+
+        if(!empty($filtre['checkbox4'])){
+
+
+        }
+        $query = $qb->getQuery();
+        $result = $query->execute();
+
+        return $result;
+
+
+    }
+
+    public function getSortieOuverte(){
+        $em = $this->getEntityManager();
+        $etat1 = $em->getRepository(Etat::class)->find(2);
+        $etat2 = $em->getRepository(Etat::class)->find(3);
+
+
+        $qb = $this->createQueryBuilder('s');
+        $qb->where('s.dateHeureDebut < :dateDuJour')
+            ->orWhere('s.etat = :etat1')
+            ->orWhere('s.etat = :etat2')
+            ->setParameter('dateDuJour', new \DateTime())
+            ->setParameter('etat1', $etat1)
+            ->setParameter('etat2', $etat2);
+
+        $query = $qb->getQuery();
+        $result = $query->execute();
+
+        return $result;
+
+    }
+
+
 }

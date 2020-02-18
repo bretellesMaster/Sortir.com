@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
@@ -37,7 +38,6 @@ class SortieType extends AbstractType
             ->add('latitude', TextType::class, [
                 'mapped'=>false,
             ])
-
             ->add('longitude', TextType::class, [
                 'mapped'=>false,
             ])
@@ -46,9 +46,7 @@ class SortieType extends AbstractType
             ])
             ->add('codePostal', TextType::class, [
                 'mapped'=>false,
-            ])
-            ->add('Valider', SubmitType::class);
-
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

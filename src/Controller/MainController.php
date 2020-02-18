@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Site;
 use App\Entity\Sortie;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -17,11 +18,15 @@ class MainController extends AbstractController
      */
     public function index(EntityManagerInterface $em)
     {
-        $sorties = $em->getRepository(Sortie::class)->findAll();
+        $sorties = $em->getRepository(Sortie::class)->getSortieOuverte();
+        $sites = $em->getRepository(Site::class)->findAll();
 
+
+//        dump($sorties);die();
 
         return $this->render('main/index.html.twig', [
             'sorties' => $sorties,
+            'sites'=>$sites,
         ]);
     }
 }
