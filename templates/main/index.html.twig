@@ -35,7 +35,7 @@
                 <tbody class="tbody">
                 {% for sortie in sorties %}
                     <tr>
-                        <td> {{ sortie.nom }}</a></td>
+                        <td> {{ sortie.nom }}</td>
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
                         <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>

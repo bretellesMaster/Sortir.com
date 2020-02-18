@@ -54,7 +54,9 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-
+            /*$etat->setId(6)
+             * $etat->setLibellé("Annulé");
+             * $sortie->setEtat($this);*/
 
             $sortie->setSite($this->getUser()->getSite());
             $sortie->setOrganisateur($this->getUser());
