@@ -42,7 +42,8 @@ class Sortie
     private $duree;
 
     /**
-     * @Assert\LessThan($dateHeureDebut)
+     * @Assert\GreaterThan("today")
+     *
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
@@ -202,6 +203,7 @@ class Sortie
 
     public function removeUser(User $user): self
     {
+        
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
             $user->removeSorty($this);
