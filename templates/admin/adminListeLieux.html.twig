@@ -35,12 +35,12 @@
                     <tr>
                         <td>{{ ville.nom }}</td>
                         <td>{{ ville.codePostal }}</td>
-                        <td><a href="">Modifier</a> - <a href="">Supprimer</a></td>
+                        <td><a href="{{ path('adminModifLieux',{'id':ville.id}) }}">Modifier</a> - <a href="">Supprimer</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <p><a href="">Ajouter</a></p>
+            <a class="btn btn-primary" href="" role="button">Ajouter</a>
         </div>
     </div>
 

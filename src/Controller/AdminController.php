@@ -51,6 +51,36 @@ class AdminController extends AbstractController
 
         return $this->render('admin/adminListeLieux.html.twig',
             ['villes' => $villes]);
+    }
 
+    /**
+     * @Route("/admin/adminModifLieux/{id}", name="adminModifLieux")
+     * @IsGranted("ROLE_ADMIN")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param $id
+     * @return Response
+     */
+    public function adminModifLieux(EntityManagerInterface $em, Request $request, $id)
+    {
+        $villeRepo = $em->getRepository(Ville::class);
+        $villes = $villeRepo->find($id);
+
+        $villeForm = $this->createForm(VilleType::class, $villes);
+        $villeForm->handleRequest($request);
+
+        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+
+            $em->persist($villes);
+            $em->flush();
+
+            $this->addFlash("success", "modification effectuée");
+
+            return $this->redirectToRoute('main');
+        }
+
+        return $this->render('admin/adminModifLieux.html.twig', [
+            'villeForm' => $villeForm->createView(),
+        ]);
     }
 }
