@@ -68,7 +68,9 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-
+            /*$etat->setId(6)
+             * $etat->setLibellé("Annulé");
+             * $sortie->setEtat($this);*/
 
             if ($publication == 1) {
                 $etat = $em->getRepository(Etat::class)->find(1);
