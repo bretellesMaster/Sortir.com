@@ -74,27 +74,25 @@ class UserController extends AbstractController
 
         if ($sortie->getUsers()->count() < $sortie->getNbInscriptionsMax()) {
             $sortie->addUser($user);
+
+
+            $nbMax = $sortie->getNbInscriptionsMax();
+            $nb = $sortie->getUsers()->count();
+
+            if($nb == $nbMax){
+                $sortie = $em->getRepository(Sortie::class)->find($id);
+                $etat = $em->getRepository(Etat::class)->find(3);
+                $sortie->setEtat($etat);
+                $em->persist($sortie);
+            }
             $em->persist($sortie);
 
+
             $em->flush();
+
             $this->addFlash("success", 'Vous êtes bien inscrit à l\'évenement : '.$sortie->getNom());
         }
-        elseif($sortie->getUsers()->count()-1 == $sortie->getNbInscriptionsMax()){
-            $etat = $em->getRepository(Etat::class)->find(3);
-            $sortie->setEtat($etat);
-            $em->persist($sortie);
 
-            $em->flush();
-            $this->addFlash("danger", 'Sortie complète');
-        }
-        else{
-            $etat = $em->getRepository(Etat::class)->find(3);
-            $sortie->setEtat($etat);
-            $em->persist($sortie);
-
-            $em->flush();
-            $this->addFlash("danger", "Sortie complète");
-        }
         return $this->redirectToRoute('main');
     }
 
@@ -108,9 +106,14 @@ class UserController extends AbstractController
     public function desinscriptionSortie(EntityManagerInterface $em, $id){
 
         $sortie = $em->getRepository(Sortie::class)->find($id);
+        $etat = $em->getRepository(Etat::class)->find(3);
         $user = $this->getUser();
 
         $sortie->removeUser($user);
+        if($sortie->getEtat()->getId() === $etat->getId()){
+            $etat = $em->getRepository(Etat::class)->find(2);
+            $sortie->setEtat($etat);
+        }
         $em->persist($sortie);
         $em->flush();
 

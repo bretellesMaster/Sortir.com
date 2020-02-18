@@ -9,8 +9,10 @@
 }
 
 body {
+    background: url("../img/background.png") bottom fixed no-repeat;
+    background-size: 100% 220px;
+}
 
-<<<<<<< HEAD
 .userTable{
     width: 200px;
     margin: auto;
@@ -19,16 +21,15 @@ body {
     padding: 20px;
 }
 
-=======
-    background: url("../img/background.png") bottom fixed no-repeat;
-    background-size: 100% 220px;
-}
+
+
+
 /*.fond{*/
 /*    background: url("../img/background2.jpg") center fixed no-repeat;*/
 /*    width: 100%;*/
 /*    height: 100%;*/
 /*}*/
->>>>>>> 03067ac8853abe10ffe7dbc9a5682e307149af94
+
 
 h3 {
     text-align: center;
@@ -98,6 +99,13 @@ h2 {
 
 .SortieDetails {
     text-align: center;
+
+}
+
+.cloture{
+    color: #95999c;
+    font-style: italic;
+
 
 }
 

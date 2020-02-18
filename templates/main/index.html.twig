@@ -144,7 +144,7 @@
                             {% if nb < sortie.nbInscriptionsMax %}
                             <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
                                 {% else %}
-                                <td> </td>
+                                <td><p class="cloture">Clôture des inscriptions</p></td>
                                 {% endif %}
 
                         {% endif %}
