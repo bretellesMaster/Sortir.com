@@ -37,17 +37,17 @@ class AdminController extends AbstractController
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function filtreAdmin (EntityManagerInterface $em, Request $request)
+    public function filtreAdmin(EntityManagerInterface $em, Request $request)
     {
         $rep = $em->getRepository(Ville::class)->findAll();
 
-        $filter = [
+        $filtre = [
             'search' => $request->get('search'),
         ];
 
         $user = $this->getUser();
 
-        $villes = $rep->filtre($filter, $user);
+        $villes = $rep->filtre($filtre, $user);
 
         return $this->render('admin/adminListeLieux.html.twig',
             ['villes' => $villes]);
@@ -76,7 +76,7 @@ class AdminController extends AbstractController
 
             $this->addFlash("success", "modification effectuée");
 
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('adminListeLieux');
         }
 
         return $this->render('admin/adminModifLieux.html.twig', [
