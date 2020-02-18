@@ -42,7 +42,6 @@ class Sortie
     private $duree;
 
     /**
-     * @Assert\LessThan($dateHeureDebut)
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
@@ -87,6 +86,12 @@ class Sortie
      *
      */
     private $etat;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motifAnnulation;
 
     public function __construct()
     {
@@ -242,6 +247,18 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->motifAnnulation;
+    }
+
+    public function setMotifAnnulation(?string $motifAnnulation): self
+    {
+        $this->motifAnnulation = $motifAnnulation;
 
         return $this;
     }

@@ -97,9 +97,9 @@
                 <tbody class="tbody">
                 {% for sortie in sorties %}
                     <tr>
-
                         {#1#}
                         <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+
 
                         {#2#}
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
@@ -111,41 +111,42 @@
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
 
 
-{# 5 #}
+                        {# 5 #}
                         <td>{{ sortie.etat.libelle }}</td>
 
 
-                    {#6#}
+                        {#6#}
                         {% if app.user in sortie.users %}
 
-                        <td>X</td>
+                            <td>X</td>
 
-                            {% else %}
+                        {% else %}
 
-                            <td> </td>
+                            <td></td>
 
                         {% endif %}
 
 
-{#7#}
+                        {#7#}
                         <td>
                             <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
 
 
-
                         {% if sortie.organisateur.id == app.user.id %}
-                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a> - Annuler</td>
+                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a>
+                            </td>
                         {% elseif app.user in sortie.users %}
-                            <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}" > Se désinscrire </a></td>
+                            <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a>
+                            </td>
                         {% else %}
                             {% set nb = (sortie.users.count) %}
 
                             {% if nb < sortie.nbInscriptionsMax %}
-                            <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
-                                {% else %}
-                                <td> </td>
-                                {% endif %}
+                                <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
 
                         {% endif %}
                     </tr>
@@ -167,18 +168,17 @@
                 </tr>
 
 
-                    </thead>
-                    <tbody class="tbod">
-                    {% for sortie in sorties %}
-                        <tr>
-                            <td>{{ sortie.nom }}</td>
-                            <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
-                            <td>{{ sortie.lieu.ville.nom }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-
+                </thead>
+                <tbody class="tbod">
+                {% for sortie in sorties %}
+                    <tr>
+                        <td>{{ sortie.nom }}</td>
+                        <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                        <td>{{ sortie.lieu.ville.nom }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
 
 
             </thead>
