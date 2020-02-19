@@ -85,4 +85,17 @@ class AdminController extends AbstractController
             'lieuForm' => $lieuForm->createView(),
         ]);
     }
+
+    /**
+     * @Route("/admin/adminDeleteLieux/{id}", name="adminDeleteLieux")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function adminDeleteLieux(EntityManagerInterface $em, $id)
+    {
+        $lieu = $em->getRepository(Lieu::class)->find($id);
+        $em->remove($lieu);
+        $em->flush();
+        $this->addFlash("success", "lieu delete");
+        return $this->redirectToRoute("adminListeLieux");
+    }
 }
