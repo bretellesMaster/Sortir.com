@@ -15,7 +15,7 @@ class VilleType extends AbstractType
         $builder
             ->add('nom')
             ->add('codePostal')
-            ->add('Modifier', SubmitType::class)
+
         ;
     }
 

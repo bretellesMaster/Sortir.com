@@ -8,7 +8,7 @@
     <div class="container">
         <div class="filtres">
             <h2>Gérer les lieux</h2>
-            <form method="get" action="{{ path('filtreAdmin') }}">
+            <form method="get" action="">
                 <div>
                     <label for="inputSearch">Le nom contient: </label>
                     <div>
@@ -25,22 +25,25 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Ville</th>
-                    <th scope="col">Code Postal</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Lieu</th>
+                    <th scope="col">Rue</th>
+                    <th scope="col">Latitude</th>
+                    <th scope="col">Longitude</th>
                 </tr>
                 </thead>
                 <tbody class="tbody">
-                {% for ville in villes %}
+                {% for lieu in lieux %}
                     <tr>
-                        <td>{{ ville.nom }}</td>
-                        <td>{{ ville.codePostal }}</td>
-                        <td><a href="{{ path('adminModifLieux',{'id':ville.id}) }}">Modifier</a> - <a href="">Supprimer</a></td>
+                        <td>{{ lieu.nom }}</td>
+                        <td>{{ lieu.rue }}</td>
+                        <td>{{ lieu.latitude }}</td>
+                        <td>{{ lieu.longitude }}</td>
+                        <td><a href="{{ path('adminModifLieux',{'id':lieu.id}) }}">Modifier</a> - <a href="">Supprimer</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <a class="btn btn-primary" href="" role="button">Ajouter</a>
+            <a class="btn btn-primary" href="{{ path('adminAjoutLieux') }}" role="button">Ajouter</a>
         </div>
     </div>
 

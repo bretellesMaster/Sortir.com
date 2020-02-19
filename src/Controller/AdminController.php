@@ -24,33 +24,11 @@ class AdminController extends AbstractController
      */
     public function adminListelieux(EntityManagerInterface $em)
     {
-        $villeRepo = $em->getRepository(Ville::class);
-        $villes = $villeRepo->findAll();
+        $lieuRepo = $em->getRepository(Lieu::class);
+        $lieux = $lieuRepo->findAll();
 
         return $this->render('admin/adminListeLieux.html.twig',
-            ['villes' => $villes]);
-    }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/admin2", name="filtreAdmin")
-     * @param EntityManagerInterface $em
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function filtreAdmin(EntityManagerInterface $em, Request $request)
-    {
-        $rep = $em->getRepository(Ville::class)->findAll();
-
-        $filtre = [
-            'search' => $request->get('search'),
-        ];
-
-        $user = $this->getUser();
-
-        $villes = $rep->filtre($filtre, $user);
-
-        return $this->render('admin/adminListeLieux.html.twig',
-            ['villes' => $villes]);
+            ['lieux' => $lieux]);
     }
 
     /**
@@ -63,15 +41,15 @@ class AdminController extends AbstractController
      */
     public function adminModifLieux(EntityManagerInterface $em, Request $request, $id)
     {
-        $villeRepo = $em->getRepository(Ville::class);
-        $villes = $villeRepo->find($id);
+        $lieuRepo = $em->getRepository(Lieu::class);
+        $lieux = $lieuRepo->find($id);
 
-        $villeForm = $this->createForm(VilleType::class, $villes);
-        $villeForm->handleRequest($request);
+        $lieuForm = $this->createForm(LieuType::class, $lieux);
+        $lieuForm->handleRequest($request);
 
-        if ($villeForm->isSubmitted() && $villeForm->isValid()) {
+        if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
 
-            $em->persist($villes);
+            $em->persist($lieux);
             $em->flush();
 
             $this->addFlash("success", "modification effectuée");
@@ -80,7 +58,31 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/adminModifLieux.html.twig', [
-            'villeForm' => $villeForm->createView(),
+            'lieuForm' => $lieuForm->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/adminAjoutLieux", name="adminAjoutLieux")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function adminAjoutLieux(EntityManagerInterface $em, Request $request)
+    {
+        $lieu = new Lieu();
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+        $lieuForm->handleRequest($request);
+
+        if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
+            $em->persist($lieu);
+            $em->flush();
+
+            $this->addFlash("success", "ajout effectuée");
+
+            return $this->redirectToRoute('adminListeLieux');
+        }
+
+        return $this->render('admin/adminAjoutLieux.html.twig', [
+            'lieuForm' => $lieuForm->createView(),
         ]);
     }
 }
