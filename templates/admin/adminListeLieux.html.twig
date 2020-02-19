@@ -29,6 +29,7 @@
                     <th scope="col">Rue</th>
                     <th scope="col">Latitude</th>
                     <th scope="col">Longitude</th>
+                    <th scope="col">Ville</th>
                 </tr>
                 </thead>
                 <tbody class="tbody">
@@ -38,6 +39,7 @@
                         <td>{{ lieu.rue }}</td>
                         <td>{{ lieu.latitude }}</td>
                         <td>{{ lieu.longitude }}</td>
+                        <td>{{ lieu.ville.nom }}</td>
                         <td><a href="{{ path('adminModifLieux',{'id':lieu.id}) }}">Modifier</a> - <a href="">Supprimer</a></td>
                     </tr>
                 {% endfor %}
