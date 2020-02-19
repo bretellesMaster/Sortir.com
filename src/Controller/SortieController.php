@@ -65,9 +65,7 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
-            /*$etat->setId(6)
-             * $etat->setLibellé("Annulé");
-             * $sortie->setEtat($this);*/
+
 
             if ($publication == 1) {
                 $etat = $em->getRepository(Etat::class)->find(1);
@@ -206,8 +204,7 @@ class SortieController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public
-    function filtre(EntityManagerInterface $em, Request $request)
+    public function filtre(EntityManagerInterface $em, Request $request)
     {
         $rep = $em->getRepository(Sortie::class);
         $sites = $em->getRepository(Site::class)->findAll();
@@ -234,6 +231,8 @@ class SortieController extends AbstractController
         ]);
 
     }
+
+
 
 
 }

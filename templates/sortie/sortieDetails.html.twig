@@ -10,84 +10,133 @@
     <div class="col-12">
         <div class="haut">
 
-                <table class="table table-light container">
-                    <tr>
-                        <th scope="col">Nom de la sortie :</th>
-                        <td>{{ sortie.nom }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Date et heure de la sortie :</th>
-                        <td>{{ sortie.dateHeureDebut | date('d/m/y') }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Date limite d'inscription</th>
-                        <td>{{ sortie.dateLimiteInscription | date('d/m/y') }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Nombre de places</th>
-                        <td>{{ sortie.nbInscriptionsMax }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Durée</th>
-                        <td>{{ sortie.duree }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Description et infos</th>
-                        <td>{{ sortie.infosSortie }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Lieu</th>
-                        <td>{{ sortie.lieu.nom }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Rue</th>
-                        <td>{{ sortie.lieu.rue }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Ville</th>
-                        <td>{{ sortie.lieu.ville.nom }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Code Postal</th>
-                        <td>{{ sortie.lieu.ville.codePostal }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Latitude</th>
-                        <td>{{ sortie.lieu.latitude }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Longitude</th>
-                        <td>{{ sortie.lieu.longitude }}</td>
-                    </tr>
-                </table>
-                <hr>
+            <table class="table table-light container">
+                <tr>
+                    <th scope="col">Nom de la sortie :</th>
+                    <td>{{ sortie.nom }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Date et heure de la sortie :</th>
+                    <td>{{ sortie.dateHeureDebut | date('d/m/y') }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Date limite d'inscription</th>
+                    <td>{{ sortie.dateLimiteInscription | date('d/m/y') }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Nombre de places</th>
+                    <td>{{ sortie.nbInscriptionsMax }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Durée</th>
+                    <td>{{ sortie.duree }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Description et infos</th>
+                    <td>{{ sortie.infosSortie }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Lieu</th>
+                    <td>{{ sortie.lieu.nom }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Rue</th>
+                    <td>{{ sortie.lieu.rue }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Ville</th>
+                    <td>{{ sortie.lieu.ville.nom }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Code Postal</th>
+                    <td>{{ sortie.lieu.ville.codePostal }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Latitude</th>
+                    <td>{{ sortie.lieu.latitude }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Longitude</th>
+                    <td>{{ sortie.lieu.longitude }}</td>
+                </tr>
+            </table>
+            <hr>
 
         </div>
     </div>
     <div class="container-sm">
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-responsive-sm table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">Pseudo</th>
-                    <th scope="col">Nom</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users %}
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-responsive-sm table-hover">
+                    <thead>
                     <tr>
-                        <th scope="row">{{ user.pseudo }}</th>
-                        <td>{{ user.nom }}</td>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+                        <th scope="col">&nbsp;</th>
+
+
+                        <th scope="col">Actions</th>
+                        <th scope="col">&nbsp;</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <th scope="row">{{ user.pseudo }}</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+
+                            <td>{{ user.nom }}</td>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">&nbsp;</th>
+                            <td><a href="{{ path('userDetails', {'id': user.id}) }}">Afficher</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    <div class="buttonUserDetails">
+        <a class="btn btn-primary buttonUserDetails" href="{{ path ('main') }}" role="button">Retour</a>
     </div>
-            <div class="buttonUserDetails">
-                <a class="btn btn-primary buttonUserDetails" href="{{ path ('main') }}" role="button">Retour</a>
-            </div>
 
 {% endblock %}

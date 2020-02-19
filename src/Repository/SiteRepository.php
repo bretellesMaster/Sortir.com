@@ -47,4 +47,23 @@ class SiteRepository extends ServiceEntityRepository
         ;
     }
     */
+
+   /* public function filtre($filtre)
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        if (!empty($filtre['site'])) {
+            $qb->where('s.site = :site')
+                ->setParameter('site', $filtre['site']);
+
+        }
+
+        $query = $qb->getQuery();
+
+        $result = $query->execute();
+
+        return $result;
+
+
+    }*/
 }

@@ -11,7 +11,7 @@
         <div class="filtres">
             <h2>Filtrer les sorties</h2>
 
-            <form class="col-12 row" method="get" action="{{ path('filtre') }}">
+            <form class="col-12 row" method="post" action="">
                 <div class="gauche col-6 row">
                     <div class="form-group row col-12">
                         <label for="inputEmail3" class="col-sm-6 col-form-label">Site : </label>
@@ -131,7 +131,7 @@
 
 {#7#}
                         <td>
-                            <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                            <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
 
 
@@ -183,17 +183,6 @@
 
 
 
-            </thead>
-            <tbody class="tbod">
-            {% for sortie in sorties %}
-                <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
-                    <td>{{ sortie.lieu.ville.nom }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            </table>
 
         </div>
 

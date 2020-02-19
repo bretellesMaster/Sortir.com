@@ -31,9 +31,17 @@
             <th scope="col">Site de rattachement :</th>
             <td>{{ user.site }}</td>
         </tr>
-        <tr>
-           <td> <a class="btn btn-primary buttonUserDetails" href="{{path ('main')}}" role="button">Retour</a></td>
-        </tr>
     </table>
-
+    <div class="buttonUserDetails">
+        <a class="btn btn-primary buttonUserDetails" href="{{ path('main') }}" role="button">Retour</a>
+    </div>
+<!--subscriber / listener
+create subscriber class implements EventSubscriber
+config in yaml service
+App\\:
+tags:''
+in the class
+getSubscribedEvent() : a group oh methods
+view of methodsDetails
+-->
 {% endblock %}
