@@ -39,9 +39,9 @@
 
             <button class="btn btn-primary" type="submit" id="publication" name="publication" value="2">Publier la sortie</button>
 
-            <a class="btn btn-primary" href="#" role="button">Supprimer la sortie</a>
+            <a class="btn btn-primary" href="{{ path('sortieDetailCancel', {'id': sortie.id}) }}" role="button">Annuler la sortie</a>
 
-            <a class="btn btn-primary" href="{{ path('main') }}" role="button">Annuler</a>
+            <a class="btn btn-primary" href="{{ path('main') }}" role="button">Retour</a>
         </div>
 
         {{ form_end(sortieForm) }}
@@ -52,8 +52,8 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
+
     <!-- Javascript a faire pour rafraichir quand on change le lieu -->
 
-</script>
+
 {% endblock %}

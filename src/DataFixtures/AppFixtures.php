@@ -151,7 +151,10 @@ $manager->flush();
         $lieux = $manager->getRepository(Lieu::class)->findAll();
         $orga = $manager->getRepository(User::class)->findAll();
         $sites = $manager->getRepository(Site::class)->findAll();
-        $etats = $manager->getRepository(Etat::class)->findAll();
+
+        $etatOuvert = $manager->getRepository(Etat::class)->find(1);
+        $etatCreer = $manager->getRepository(Etat::class)->find(2);
+        $etats = [$etatOuvert, $etatCreer];
         for($i=0; $i < 50; $i++){
             $sortie = new Sortie();
             $sortie->setNom('Sortie'.($i+1));
@@ -159,19 +162,15 @@ $manager->flush();
             $sortie->setOrganisateur($faker->randomElement($orga));
             $sortie->setSite($faker->randomElement($sites));
             $datedebut = $faker->dateTimeBetween('now', '+4 months');
-            $sortie->setEtat($faker->randomElement($etats));
+            $sortie->setEtat($etats[rand(0,1)]);
             $sortie->setDateHeureDebut($datedebut);
             $datefin = $faker->dateTimeBetween('-10 days', $datedebut);
             $sortie->setDateLimiteInscription($datefin);
             $sortie->setDuree(4);
             $sortie->setInfosSortie($faker->sentence($nbWords = 6, $variableNbWords = true));
-            $sortie->setNbInscriptionsMax(rand(5, 30));
+            $sortie->setNbInscriptionsMax(rand(1, 3));
             $manager->persist($sortie);
 
-
-
-
-
         }
 
 
@@ -180,11 +179,6 @@ $manager->flush();
 
 
 
-        for($i = 0; $i < 30; $i++){
-            $sortie = new Sortie();
-
-
-        }
 
 
     $manager->flush();

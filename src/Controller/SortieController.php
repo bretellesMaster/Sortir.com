@@ -18,6 +18,7 @@ use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,6 +48,9 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+
+
 
             $publication = $request->get('publication');
 
@@ -79,10 +83,17 @@ class SortieController extends AbstractController
             $sortie->setSite($this->getUser()->getSite());
             $sortie->setOrganisateur($this->getUser());
 
+
+            if($sortie->getDateHeureDebut() < $sortie->getDateLimiteInscription()){
+                $this->addFlash('danger', 'Problème date');
+                return $this->redirectToRoute('sortieCreate', [
+                    'sortie'=>$sortie,
+                ]);
+
+            }
             $em->persist($ville);
             $em->persist($lieu);
             $em->persist($sortie);
-
             $em->flush();
 
             $this->addFlash('success', "Has been added !");
@@ -103,19 +114,13 @@ class SortieController extends AbstractController
     public function sortieDetails($id, EntityManagerInterface $em)
     {
         $sortie = $em->getRepository(Sortie::class)->find($id);
-
         $users = $sortie->getUsers();
 
 
-
-
-
         return $this->render('sortie/sortieDetails.html.twig', [
-                'sortie'=>$sortie,
-                'users'=>$users
-
-                ]);
-
+            'sortie' => $sortie,
+            'users' => $users
+        ]);
     }
 
     /**
@@ -140,7 +145,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         //TRAITEMENT
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             //Definition Etat
             $publication = $request->get('publication');
             if ($publication == 1) {
@@ -152,16 +157,15 @@ class SortieController extends AbstractController
             }
 
             $em->persist($sortie);
-
             $em->flush();
 
             $this->addFlash("success", "modification effectuée");
             return $this->redirectToRoute('main', ['id' => $id]);
         }
 
-        return $this->render('sortie/sortieModif.html.twig',[
-            'sortieForm'=> $form->createView(),
-            'sortie'=> $sortie,
+        return $this->render('sortie/sortieModif.html.twig', [
+            'sortieForm' => $form->createView(),
+            'sortie' => $sortie,
         ]);
     }
 
@@ -171,31 +175,35 @@ class SortieController extends AbstractController
      */
     public function sortieDetailCancel(EntityManagerInterface $em, Request $request, $id)
     {
-        $sortieRepository = $em->getRepository(Sortie::class);
-        $sorties = $sortieRepository->findBy(["id" => $id]);
-
+        $sortie = $em->getRepository(Sortie::class)->find($id);
         return $this->render('sortie/sortieCancel.html.twig',
-            ["sorties" => $sorties]);
-
+            ["sortie" => $sortie]);
     }
 
+
     /**
-     * @Route("/Sortie/Cancel2/{id}", name="sortieCancel")
-     * @IsGranted("ROLE_USER")
+     * @Route("/Sortie/Cancel/Motif/{id}", name="sortieMotifAnnulation")
      */
-    public function sortieCancel(EntityManagerInterface $em, Request $request, $id)
+    public function sortieMotifAnnulation(EntityManagerInterface $em, Request $request, $id)
     {
         $sortie = $em->getRepository(Sortie::class)->find($id);
+        //modification de l'etat
         $etat = $em->getRepository(Etat::class)->find(6);
+
+        // recuperation du motif
+        $motif = $request->get('motifAnnulation');
+
+        $sortie->setMotifAnnulation($motif);
         $sortie->setEtat($etat);
 
         $em->persist($sortie);
         $em->flush();
-
-        $this->addFlash('success', "Sortie cancel !");
-
-        return $this->redirectToRoute("main");
+        $this->addFlash('success', "Sortie cancelled !");
+        return $this->render("sortie/sortieDetails.html.twig", [
+            'sortie' => $sortie,
+        ]);
     }
+
 
     /**
      * @IsGranted("ROLE_USER")
@@ -218,7 +226,6 @@ class SortieController extends AbstractController
             'checkbox2' => $request->get('checkbox2'),
             'checkbox3' => $request->get('checkbox3'),
             'checkbox4' => $request->get('checkbox4'),
-
         ];
         $user = $this->getUser();
 
@@ -227,7 +234,6 @@ class SortieController extends AbstractController
         return $this->render('main/index.html.twig', [
             'sorties' => $sorties,
             'sites' => $sites
-
         ]);
 
     }
