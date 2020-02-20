@@ -84,13 +84,21 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
+                    {#1#}
                     <th scope="col">Nom de la sortie</th>
+                    {#2#}
                     <th scope="col">Date de la sortie</th>
+                    {#3#}
                     <th scope="col">Clôture</th>
+                    {#4#}
                     <th scope="col">Inscrits / Places</th>
+                    {#5#}
                     <th scope="col">État</th>
+                    {#6#}
                     <th scope="col">Inscrit</th>
+                    {#7#}
                     <th scope="col">Organisateur</th>
+                    {#8#}
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -119,22 +127,18 @@
 
                         {#6#}
                         {% if app.user in sortie.users %}
-
                             <td>X</td>
-
                         {% else %}
-
                             <td></td>
-
                         {% endif %}
 
 
                         {#7#}
                         <td>
-                            <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                            <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
 
-
+                        {#8#}
                         {% if sortie.organisateur.id == app.user.id %}
                             <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a>
                             </td>

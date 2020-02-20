@@ -169,6 +169,9 @@ $manager->flush();
             $sortie->setDuree(4);
             $sortie->setInfosSortie($faker->sentence($nbWords = 6, $variableNbWords = true));
             $sortie->setNbInscriptionsMax(rand(1, 3));
+
+            //boolean Archive
+            $sortie->setArchive(false);
             $manager->persist($sortie);
 
         }

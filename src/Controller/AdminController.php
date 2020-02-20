@@ -65,4 +65,20 @@ class AdminController extends AbstractController
 
         return $this-> render('admin/adminSites.html.twig');
     }
+
+    /**
+     * @Route("/adminSortie", name="adminArchivageSortie")
+     * @isGranted("ROLE_ADMIN")
+     */
+    public function archiveSortie (EntityManagerInterface $em){
+
+        $sorties = $em->getRepository(Sortie::class)->findAll();
+
+        return $this->render('admin/adminSortie.html.twig', [
+            'sorties' => $sorties,
+        ]);
+
+    }
+
+
 }
