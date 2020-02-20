@@ -89,7 +89,6 @@ class AdminController extends AbstractController
     }
 
     ///////////// Méthode supprimer lieu en administrateur ///////////////
-    ///////// ( attention supprime un lieu sans condition !!! ) ////////////
     /**
      * @Route("/admin/adminDeleteLieux/{id}", name="adminDeleteLieux")
      * @IsGranted("ROLE_ADMIN")
@@ -97,7 +96,8 @@ class AdminController extends AbstractController
     public function adminDeleteLieux(EntityManagerInterface $em, $id)
     {
         $lieu = $em->getRepository(Lieu::class)->find($id);
-        $em->remove($lieu);
+        $lieu->setArchive(true);
+        $em->persist($lieu);
         $em->flush();
         $this->addFlash("success", "lieu delete");
         return $this->redirectToRoute("adminListeLieux");
