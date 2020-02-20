@@ -6,9 +6,9 @@
 {% block body %}
 
     <div class="container">
-        <div class="filtres">
+        {#<div class="filter">
             <h2>Gérer les lieux</h2>
-            <form method="get" action="">
+            <form method="post" action="">
                 <div>
                     <label for="inputSearch">Le nom contient: </label>
                     <div>
@@ -19,7 +19,7 @@
                     <button type="submit" class="btn btn-lg btn-primary">Rechercher</button>
                 </div>
             </form>
-        </div>
+        </div>#}
 
         <div class="tableauSortie d-none d-lg-block">
             <table class="table table-hover table-striped">
@@ -36,14 +36,15 @@
                 <tbody class="tbody">
                 {% for lieu in lieux %}
                     {% if lieu.archive == false %}
-                    <tr>
-                        <td>{{ lieu.nom }}</td>
-                        <td>{{ lieu.rue }}</td>
-                        <td>{{ lieu.latitude }}</td>
-                        <td>{{ lieu.longitude }}</td>
-                        <td>{{ lieu.ville.nom }}</td>
-                        <td><a href="{{ path('adminModifLieux',{'id':lieu.id}) }}">Modifier</a> - <a href="{{ path('adminDeleteLieux',{'id':lieu.id}) }}">Supprimer</a></td>
-                    </tr>
+                        <tr>
+                            <td>{{ lieu.nom }}</td>
+                            <td>{{ lieu.rue }}</td>
+                            <td>{{ lieu.latitude }}</td>
+                            <td>{{ lieu.longitude }}</td>
+                            <td>{{ lieu.ville.nom }}</td>
+                            <td><a href="{{ path('adminModifLieux',{'id':lieu.id}) }}">Modifier</a> - <a
+                                        href="{{ path('adminDeleteLieux',{'id':lieu.id}) }}">Supprimer</a></td>
+                        </tr>
                     {% else %}
 
                     {% endif %}
