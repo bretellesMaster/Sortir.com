@@ -44,7 +44,7 @@
                 </div>
 
 
-              {# --------------------- CHECKBOX POUR LES FILTRES --------------------- #}
+                {# --------------------- CHECKBOX POUR LES FILTRES --------------------- #}
                 <div class="milieu col-4 row">
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1" name="checkbox1">
@@ -106,49 +106,51 @@
                 {% for sortie in sorties %}
                     <tr>
 
-                        {#1#}
-                        <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+                    {#1#}
 
+                    <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
 
-                        {#2#}
+                    {#2#}
 
-                        <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
+                    <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
 
-                        {#3#}
-                        <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                    {#3#}
 
-                        {#4#}
-                        <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
 
+                    {#4#}
 
-                        {# 5 #}
-                        <td>{{ sortie.etat.libelle }}</td>
+                    <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
 
+                    {#5#}
 
-                        {#6#}
-                        {% if app.user in sortie.users %}
-                            <td>X</td>
-                        {% else %}
-                            <td></td>
-                        {% endif %}
+                    <td>{{ sortie.etat.libelle }}</td>
 
+                    {#6#}
 
-                        {#7#}
-                        <td>
-                            <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
-                        </td>
+                    {% if app.user in sortie.users %}
+                        <td>X</td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
 
-                        {#8#}
-<<<<<<< HEAD
-                        <td><a href="{{ path('sortieDetails', {'id' : sortie.id}) }}">Afficher</a>
-                            {% if sortie.organisateur.id == app.user.id %}
-                            <p><a href="{#nom méthode modifier#}">Modifier</a> -
-                                <a href="{{ path('sortieDetailCancel', {'id': sortie.id}) }}">Annuler</a></p>
-                            {% elseif app.user in sortie.users %}
-                            <p><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a></p>
-                            {% else  %}
-                            <a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></td>
-=======
+                    {#7#}
+
+                    <td>
+                        <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                    </td>
+
+                    {#8#}
+
+                    <td><a href="{{ path('sortieDetails', {'id' : sortie.id}) }}">Afficher</a>
+                    {% if sortie.organisateur.id == app.user.id %}
+                    <p><a href="{#nom méthode modifier#}">Modifier</a> -
+                        <a href="{{ path('sortieDetailCancel', {'id': sortie.id}) }}">Annuler</a></p>
+                    {% elseif app.user in sortie.users %}
+                        <p><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a></p>
+                    {% else %}
+                        <a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></td>
+
                         {% if sortie.organisateur.id == app.user.id %}
                             <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a>
                             </td>
@@ -160,15 +162,13 @@
 
                             {% if nb < sortie.nbInscriptionsMax %}
 
-                            <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
-                                {% else %}
+                                <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
+                            {% else %}
                                 <td><p class="cloture">Clôture des inscriptions</p></td>
-                                {% endif %}
-
-
->>>>>>> 6ba25a8a2de6495f2efe2c2ba72ee0a23a38090e
+                            {% endif %}
+                            
                         {% endif %}
-                    </tr>
+                        </tr>
                 {% endfor %}
                 </tbody>
             </table>
@@ -198,7 +198,6 @@
                 {% endfor %}
                 </tbody>
             </table>
-
 
 
         </div>
