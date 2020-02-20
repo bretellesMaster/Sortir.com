@@ -38,12 +38,15 @@ class Sortie
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *     min = 1,
+     *     minMessage="La durée de la sortie ne peut pas être négative."
+     * )
      */
     private $duree;
 
 
     /**
-     * @Assert\LessThan("$dateHeureDebut")
      * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
@@ -51,6 +54,10 @@ class Sortie
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(
+     *     min = 1,
+     *     minMessage="Le nombre de participant ne peut pas être négatif."
+     * )
      */
     private $nbInscriptionsMax;
 
@@ -61,12 +68,10 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieu", inversedBy="sorties")
-     *
      */
     private $lieu;
 
     /**
-     *
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="sorties",)
      *
      */
@@ -90,7 +95,7 @@ class Sortie
     private $etat;
 
     /**
-     * @Assert\NotBlank()
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $motifAnnulation;

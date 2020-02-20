@@ -4,23 +4,25 @@
 
 {% block body %}
 
-<h2 class=text-center>Annuler une sortie</h2>
+    <h2 class=text-center>Annuler une sortie</h2>
 
-        <div>
-            <p>Nom de la sortie : {{ sortie.nom }}</p>
-            <p>Date de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
-            <p>Site organisateur : {{ sortie.site }}</p>
-            <p>Lieu : {{ sortie.lieu.ville.nom }} </p>
+    <div>
+        <p>Nom de la sortie : {{ sortie.nom }}</p>
+        <p>Date de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
+        <p>Site organisateur : {{ sortie.site }}</p>
+        <p>Lieu : {{ sortie.lieu.ville.nom }} </p>
 
-            <form method="post" action="{{path('sortieMotifAnnulation', {'id': sortie.id} )}}">
+        <form method="post" action="{{ path('sortieMotifAnnulation', {'id': sortie.id} ) }}">
 
-                <label id="motifAnnulation">Motif : </label>
-                <textarea id="motifAnnulation" name="motifAnnulation" rows="5" cols="33" required ></textarea>
+            <label id="motifAnnulation">Motif : </label>
+            <textarea id="motifAnnulation" name="motifAnnulation" rows="5" cols="33" required></textarea>
 
-                <button type="submit"> Enregistrer </button>
+            <div class="text-center">
+                <button class="btn btn-primary buttonUserDetails" type="submit"> Enregistrer</button>
                 <a class="btn btn-primary buttonUserDetails" href="{{ path("main") }}" role="button">Retour</a>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 
 
 {% endblock %}

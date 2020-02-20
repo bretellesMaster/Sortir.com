@@ -5,16 +5,13 @@ namespace App\Controller;
 
 use App\Entity\Site;
 use App\Entity\Sortie;
-use App\Entity\Ville;
 use App\Form\AdminSitesUpdateType;
-use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class AdminController extends AbstractController
 {
@@ -49,6 +46,7 @@ class AdminController extends AbstractController
      * @Route("/adminSites/Filtre", name="filtreSites")
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
+     *
 
     public function filtre(EntityManagerInterface $em, Request $request)
     {
@@ -129,15 +127,54 @@ class AdminController extends AbstractController
      */
     public function archiveSortie (EntityManagerInterface $em){
 
+        // on récupère toutes les sorties
+        $sorties = $em->getRepository(Sortie::class)->findAll();
+
+        // boucle pour control
+        foreach ($sorties as $sortie ) {
+                //récupération de l'état de la sortie
+                $etat = $sortie->getEtat();
+                // on recupere l'intervalle entre la date du jour et la date du debut de la sortie
+                $interval = date_diff(new \DateTime(), $sortie->getDateHeureDebut());
+
+                // si l'intervalle est superieur à 30jours et à l'état "annulé" ou "passée"
+                if ( ($interval->days > 30) && ($etat =='Annulé' or $etat=='Passée')) {
+                    $sortie->setArchive(true);
+                    $em->persist($sortie);
+                    $em->flush();
+                }
+            }
+        $this ->addFlash("success", "Sortie(s) archivée(s)" );
+        return $this->redirectToRoute('adminArchiSortieList');
+    }
+
+    /**
+     * @Route("/adminSortie/list", name="adminArchiSortieList")
+     * @isGranted("ROLE_ADMIN")
+     */
+    public function listSortiePourArchivage (EntityManagerInterface $em){
         $sorties = $em->getRepository(Sortie::class)->findAll();
 
         return $this->render('admin/adminSortie.html.twig', [
             'sorties' => $sorties,
         ]);
-
     }
 
-    /*
+    /**
+     * @Route("/adminSortie/listeSortieArchivée", name="adminListSortieArchivée")
+     * @isGranted("ROLE_ADMIN")
+     */
+    public function listSortieArchivée (EntityManagerInterface $em){
+        $sorties = $em->getRepository(Sortie::class)->findBy([
+            'archive' => true,
+        ]);
+
+        return $this->render('sortie/sortieArchivéeList.html.twig', [
+            'sorties' => $sorties,
+        ]);
+    }
+
+    /**
      * @Route("/adminSites/Add/", name="adminSitesAdd")
      */
     public function adminSitesAdd(EntityManagerInterface $em, Request $request){

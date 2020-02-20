@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page pour archiver les sorties{% endblock %}
+{% block title %}Liste des Sorties Archivées{% endblock %}
 
 {% block body %}
 
-    <form class="text-center formAdminButtonSortie" method="post" action="{{ path('adminArchivageSortie') }}">
-        <button class="btn btn-primary buttonUserDetails" type="submit">Archiver les sorties</button>
-        <a class="btn btn-primary buttonUserDetails" href="{{ path("adminListSortieArchivée") }}" role="button">Liste des Sorties archivées</a>
-        <a class="btn btn-primary buttonUserDetails" href="{{ path("main") }}" role="button">Retour</a>
-    </form>
+    <div class="text-center formAdminButtonSortie">
+        <a class="btn btn-primary buttonUserDetails" href="{{ path("adminArchiSortieList") }}" role="button">Retour</a>
+    </div>
 
     <div class="tableauSortie d-none d-lg-block">
         <table class="table table-hover table-striped container">
@@ -18,8 +16,6 @@
                 <th scope="col">Nom de la sortie</th>
                 {#2#}
                 <th scope="col">Date de la sortie</th>
-                {#3#}
-                <th scope="col">État</th>
                 {#4#}
                 <th scope="col">Organisateur</th>
             </tr>
@@ -27,7 +23,6 @@
 
             <tbody class="tbody">
             {% for sortie in sorties %}
-                {% if sortie.archive == 0 %}
                     <tr>
                         {#1#}
                         <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
@@ -35,15 +30,11 @@
                         {#2#}
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
 
-                        {#3#}
-                        <td>{{ sortie.etat.libelle }}</td>
-
                         {#4#}
                         <td>
                             <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
                     </tr>
-                {% endif %}
             {% endfor %}
             </tbody>
         </table>

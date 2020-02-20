@@ -69,6 +69,8 @@ class SortieController extends AbstractController
             $lieu->setRue($rueLieu);
             $lieu->setVille($ville);
             $sortie->setLieu($lieu);
+            $sortie->setMotifAnnulation(false);
+            $sortie->setArchive(false);
 
 
             if ($publication == 1) {
