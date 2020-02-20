@@ -39,7 +39,7 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="lieu")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="lieu", cascade={"remove"})
      */
     private $sorties;
 
@@ -48,6 +48,11 @@ class Lieu
      * @ORM\JoinColumn(nullable=false)
      */
     private $ville;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archive;
 
     public function __construct()
     {
@@ -150,9 +155,23 @@ class Lieu
         return $this;
     }
 
+
+    public function getArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): self
+    {
+        $this->archive = $archive;
+
+        return $this;
+    }
+
+
     public function __toString()
     {
-     return $this->getNom();
+        return $this->getNom();
     }
 
 }

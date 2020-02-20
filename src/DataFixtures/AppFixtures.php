@@ -33,6 +33,7 @@ class AppFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
         $site = new Site();
         $site->setNom('Saint-Herblain');
+        $site->setArchive(false);
         $manager->persist($site);
 
        $nathan = new User();
@@ -123,6 +124,7 @@ class AppFixtures extends Fixture
             $lieu->setRue('Rue '.$faker->name);
             $lieu->setLongitude($faker->numberBetween(0, 40));
             $lieu->setLatitude($faker->numberBetween(0, 40));
+            $lieu->setArchive(false);
             $manager->persist($lieu);
 
 
