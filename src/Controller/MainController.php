@@ -25,9 +25,14 @@ class MainController extends AbstractController
             if($sortie->getDateLimiteInscription() < $dateDuJour){
                 $sortie->setEtat($em->getRepository(Etat::class)->find(3));
                 $em->persist($sortie);
-                $em->flush();
-            }
 
+            }
+            if($sortie->getDateHeureDebut() < $dateDuJour){
+                $sortie->setEtat($em->getRepository(Etat::class)->find(5));
+                $em->persist($sortie);
+
+            }
+            $em->flush();
 
         }
 

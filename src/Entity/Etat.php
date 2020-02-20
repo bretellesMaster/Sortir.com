@@ -13,7 +13,7 @@ class Etat
 {
     const CREEE = 'Créée';
     const OUVERTE = 'Ouverte';
-    const CLOTUREE = 'Cloturée';
+    const CLOTUREE = 'Clôturée';
     const ENCOURS = 'Activité en cours';
     const PASSEE = 'Passée';
     const ANNULEE = 'Annulée';

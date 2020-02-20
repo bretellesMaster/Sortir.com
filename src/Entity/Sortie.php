@@ -41,15 +41,16 @@ class Sortie
      */
     private $duree;
 
+
     /**
+     * @Assert\LessThan("$dateHeureDebut")
      * @Assert\GreaterThan("today")
-     *
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
 
     /**
-     * 
+     *
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionsMax;
@@ -80,7 +81,6 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortie")
-     *
      */
     private $site;
 
@@ -89,6 +89,17 @@ class Sortie
      *
      */
     private $etat;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motifAnnulation;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archive;
 
     public function __construct()
     {
@@ -204,7 +215,7 @@ class Sortie
 
     public function removeUser(User $user): self
     {
-        
+
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
             $user->removeSorty($this);
@@ -249,24 +260,26 @@ class Sortie
         return $this;
     }
 
-    public function isInscriptionPossible(User $user){
 
-        if($this->etat->getLibelle() != Etat::OUVERTE ){
+    public function isInscriptionPossible(User $user)
+    {
+
+        if ($this->getEtat()->getLibelle() != Etat::OUVERTE) {
             return false;
         }
 
 
-        if($this->users->contains($user)){
+        if ($this->users->contains($user)) {
             return false;
 
         }
 
-        if ($this->dateLimiteInscription > new \DateTime()){
+        if ($this->dateLimiteInscription < new \DateTime()) {
             return false;
 
         }
 
-        if($this->users->count() <= $this->nbInscriptionsMax){
+        if ($this->users->count() >= $this->nbInscriptionsMax) {
             return false;
         }
 
@@ -275,5 +288,62 @@ class Sortie
     }
 
 
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->motifAnnulation;
+    }
+
+    public function setMotifAnnulation(?string $motifAnnulation): self
+    {
+        $this->motifAnnulation = $motifAnnulation;
+
+        return $this;
+    }
+
+    public function getArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): self
+    {
+        $this->archive = $archive;
+
+        return $this;
+    }
+
+    public function isArchivable(User $user)
+    {
+
+        $dateDebut = $this->dateHeureDebut;
+
+        $dateDuJour = new \DateTime();
+
+        $interval = $dateDebut->diff($dateDuJour);
+
+        if ($this->etat->getLibelle() == Etat::PASSEE ||
+            $this->getEtat()->getLibelle() == Etat::ANNULEE) {
+
+            if ($interval->days > 30) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function isCloturable(){
+        $nb = $this->getUsers()->count();
+        $nbMax = $this->nbInscriptionsMax;
+
+        if($this->getEtat()->getLibelle() == Etat::OUVERTE){
+            if ($nb >= $nbMax){
+                return true;
+
+            }
+
+        }
+        return false;
+    }
 
 }

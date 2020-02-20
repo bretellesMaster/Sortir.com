@@ -11,7 +11,7 @@
         <div class="filtres">
             <h2>Filtrer les sorties</h2>
 
-            <form class="col-12 row" method="get" action="{{ path('filtre') }}">
+            <form class="col-12 row" method="post" action="">
                 <div class="gauche col-6 row">
                     <div class="form-group row col-12">
                         <label for="inputEmail3" class="col-sm-6 col-form-label">Site : </label>
@@ -84,13 +84,21 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
+                    {#1#}
                     <th scope="col">Nom de la sortie</th>
+                    {#2#}
                     <th scope="col">Date de la sortie</th>
+                    {#3#}
                     <th scope="col">Clôture</th>
+                    {#4#}
                     <th scope="col">Inscrits / Places</th>
+                    {#5#}
                     <th scope="col">État</th>
+                    {#6#}
                     <th scope="col">Inscrit</th>
+                    {#7#}
                     <th scope="col">Organisateur</th>
+                    {#8#}
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -98,9 +106,9 @@
                 {% for sortie in sorties %}
                     <tr>
 
-
                         {#1#}
                         <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+
 
                         {#2#}
 
@@ -121,9 +129,7 @@
                         {% if app.user in sortie.users %}
 
                             <td>X</td>
-
                         {% else %}
-
                             <td></td>
 
                         {% endif %}
@@ -131,25 +137,34 @@
 
                         {#7#}
                         <td>
-                            <a href="{{ path('userDetails', {'id': sortie.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                            <a href="{{ path('userDetails', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                         </td>
 
 
+                        {#8#}
+
                         {% if sortie.organisateur.id == app.user.id %}
-                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a> - Annuler</td>
+                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a>
+                            </td>
                         {% elseif app.user in sortie.users %}
                             <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a>
                             </td>
+
                         {% elseif (sortie.etat.libelle is same as('Clôturée') ) %}
                             <td><p class="cloture">Clôture des inscriptions</p></td>
+
                         {% else %}
                             {% set nb = (sortie.users.count) %}
 
-                            {% if nb < sortie.nbInscriptionsMax %}
-                                <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
+                            {% if sortie.inscriptionPossible(app.user) %}
+
+
+                                <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></td>
                             {% else %}
+
                                 <td><p class="cloture">Clôture des inscriptions</p></td>
                             {% endif %}
+
 
                         {% endif %}
                     </tr>
@@ -183,18 +198,6 @@
                 </tbody>
             </table>
 
-
-            </thead>
-            <tbody class="tbod">
-            {% for sortie in sorties %}
-                <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
-                    <td>{{ sortie.lieu.ville.nom }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            </table>
 
         </div>
 

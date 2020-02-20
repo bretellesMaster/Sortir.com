@@ -52,15 +52,14 @@ class SortieRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @param $filtre
+     * @param $user
+     * @return mixed
+     */
     public function filtre($filtre, $user)
     {
-
-
         $qb = $this->createQueryBuilder('s');
-
-
-
-
 
 
         if (!empty($filtre['site'])) {
@@ -108,10 +107,12 @@ class SortieRepository extends ServiceEntityRepository
         $result = $query->execute();
 
         return $result;
-
-
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     public function getSortieOuverte(){
         $em = $this->getEntityManager();
         $etat1 = $em->getRepository(Etat::class)->find(2);
