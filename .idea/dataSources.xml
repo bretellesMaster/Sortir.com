@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bdd_sortir@10.27.200.6" uuid="fc317b34-8448-4247-84a9-297d577976cb">
+<<<<<<< HEAD
+    <data-source source="LOCAL" name="@10.27.200.6" uuid="dbabd0be-bd7f-433d-9760-0837c3d88c73">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://10.27.200.6:3306</jdbc-url>
+=======
+    <data-source source="LOCAL" name="bdd_sortir@10.27.200.6" uuid="14d613f1-860f-4451-95df-d20fe63de761">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mariadb://10.27.200.6:3306/bdd_sortir</jdbc-url>
+>>>>>>> 7303f1275e7eb47266f726cf5d2bb530c6d7b6c5
     </data-source>
   </component>
 </project>

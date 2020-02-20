@@ -19,9 +19,12 @@ class SortieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
+            ->add('nom', TextType::class, [
+                'data'=>'{{sortie.nom}}'
+            ])
             ->add('dateHeureDebut', DateTimeType::class, [
                 'widget' => 'single_text',
+
             ])
             ->add('duree')
             ->add('dateLimiteInscription', DateTimeType::class, [
@@ -38,7 +41,6 @@ class SortieType extends AbstractType
             ->add('latitude', TextType::class, [
                 'mapped'=>false,
             ])
-
             ->add('longitude', TextType::class, [
                 'mapped'=>false,
             ])

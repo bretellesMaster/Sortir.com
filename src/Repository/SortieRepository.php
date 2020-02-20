@@ -2,10 +2,12 @@
 
 namespace App\Repository;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -49,15 +51,14 @@ class SortieRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @param $filtre
+     * @param $user
+     * @return mixed
+     */
     public function filtre($filtre, $user)
     {
-        dump($filtre['checkbox1']);
-
         $qb = $this->createQueryBuilder('s');
-
-
-
-
 
         if (!empty($filtre['site'])) {
             $qb->where('s.site = :site')
@@ -100,7 +101,30 @@ class SortieRepository extends ServiceEntityRepository
         $result = $query->execute();
 
         return $result;
+    }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getSortieOuverte(){
+        $em = $this->getEntityManager();
+        $etat1 = $em->getRepository(Etat::class)->find(2);
+        $etat2 = $em->getRepository(Etat::class)->find(3);
+
+
+        $qb = $this->createQueryBuilder('s');
+        $qb->where('s.dateHeureDebut < :dateDuJour')
+            ->orWhere('s.etat = :etat1')
+            ->orWhere('s.etat = :etat2')
+            ->setParameter('dateDuJour', new \DateTime())
+            ->setParameter('etat1', $etat1)
+            ->setParameter('etat2', $etat2);
+
+        $query = $qb->getQuery();
+        $result = $query->execute();
+
+        return $result;
 
     }
 

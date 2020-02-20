@@ -11,7 +11,7 @@
         <div class="filtres">
             <h2>Filtrer les sorties</h2>
 
-            <form class="col-12 row" method="get" action="{{ path('filtre') }}">
+            <form class="col-12 row" method="post" action="">
                 <div class="gauche col-6 row">
                     <div class="form-group row col-12">
                         <label for="inputEmail3" class="col-sm-6 col-form-label">Site : </label>
@@ -84,13 +84,21 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
+                    {#1#}
                     <th scope="col">Nom de la sortie</th>
+                    {#2#}
                     <th scope="col">Date de la sortie</th>
+                    {#3#}
                     <th scope="col">Clôture</th>
+                    {#4#}
                     <th scope="col">Inscrits / Places</th>
+                    {#5#}
                     <th scope="col">État</th>
+                    {#6#}
                     <th scope="col">Inscrit</th>
+                    {#7#}
                     <th scope="col">Organisateur</th>
+                    {#8#}
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -99,9 +107,11 @@
                     <tr>
 
                         {#1#}
-                        <td>{{ sortie.nom }}</td>
+                        <td><a href="{{ path('sortieDetails', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+
 
                         {#2#}
+
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
 
                         {#3#}
@@ -110,14 +120,18 @@
                         {#4#}
                         <td>{{ sortie.users.count() }}/{{ sortie.nbInscriptionsMax }}</td>
 
-                        {#5#}
-                        <td>{{ sortie.etat }}</td>
+
+                        {# 5 #}
+                        <td>{{ sortie.etat.libelle }}</td>
+
 
                         {#6#}
-                        <td>{% if app.user in sortie.users %}<p>X</p>
-                            {% else %}<p></p>
-                            {% endif %}
-                        </td>
+                        {% if app.user in sortie.users %}
+                            <td>X</td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+
 
                         {#7#}
                         <td>
@@ -125,6 +139,7 @@
                         </td>
 
                         {#8#}
+<<<<<<< HEAD
                         <td><a href="{{ path('sortieDetails', {'id' : sortie.id}) }}">Afficher</a>
                             {% if sortie.organisateur.id == app.user.id %}
                             <p><a href="{#nom méthode modifier#}">Modifier</a> -
@@ -133,6 +148,25 @@
                             <p><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a></p>
                             {% else  %}
                             <a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscrire</a></td>
+=======
+                        {% if sortie.organisateur.id == app.user.id %}
+                            <td><a href="{{ path('sortieModif', {'id': sortie.id}) }}">Modifier</a>
+                            </td>
+                        {% elseif app.user in sortie.users %}
+                            <td><a href="{{ path('desinscriptionSortie', {'id': sortie.id}) }}"> Se désinscrire </a>
+                            </td>
+                        {% else %}
+                            {% set nb = (sortie.users.count) %}
+
+                            {% if nb < sortie.nbInscriptionsMax %}
+
+                            <td><a href="{{ path('inscriptionSortie', {'id': sortie.id}) }}"> S'inscire</a></td>
+                                {% else %}
+                                <td><p class="cloture">Clôture des inscriptions</p></td>
+                                {% endif %}
+
+
+>>>>>>> 6ba25a8a2de6495f2efe2c2ba72ee0a23a38090e
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -151,6 +185,8 @@
                     <th scope="col">Lieu</th>
 
                 </tr>
+
+
                 </thead>
                 <tbody class="tbod">
                 {% for sortie in sorties %}
@@ -158,23 +194,12 @@
                         <td>{{ sortie.nom }}</td>
                         <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
                         <td>{{ sortie.lieu.ville.nom }}</td>
-
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
 
-            </thead>
-            <tbody class="tbod">
-            {% for sortie in sorties %}
-                <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut | date('d/m/Y') }}</td>
-                    <td>{{ sortie.lieu.ville.nom }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-            </table>
+
 
         </div>
 

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+
+    {{ form_start(siteForm) }}
+
+    {{ form_widget(siteForm) }}
+
+    <div class="buttonUserDetails">
+        <a class="btn btn-primary" href="{{ path('adminSites') }}" role="button">Retour</a>
+    </div>
+    {{ form_end(siteForm) }}
+</div>
+{% endblock %}

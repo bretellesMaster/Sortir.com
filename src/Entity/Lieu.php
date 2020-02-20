@@ -155,6 +155,7 @@ class Lieu
         return $this;
     }
 
+
     public function getArchive(): ?bool
     {
         return $this->archive;
@@ -166,5 +167,11 @@ class Lieu
 
         return $this;
     }
-    
+
+
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+
 }
