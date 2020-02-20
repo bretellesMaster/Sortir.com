@@ -31,11 +31,11 @@ class AdminController extends AbstractController
      */
     public function adminListelieux(EntityManagerInterface $em)
     {
-        $lieuRepo = $em->getRepository(Lieu::class);
-        $lieux = $lieuRepo->findAll();
+        $lieux = $em->getRepository(Lieu::class)->findAll();
 
         return $this->render('admin/adminListeLieux.html.twig',
             ['lieux' => $lieux]);
+
     }
 
     ////////////// Méthode modifier lieu en administrateur //////////////
@@ -80,6 +80,7 @@ class AdminController extends AbstractController
         $lieuForm->handleRequest($request);
 
         if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
+            $lieu->setArchive(false);
             $em->persist($lieu);
             $em->flush();
 
@@ -106,7 +107,7 @@ class AdminController extends AbstractController
         $em->persist($lieu);
         $em->flush();
         $this->addFlash("success", "lieu delete");
-        return $this->redirectToRoute("adminListeLieux");
+        return $this->redirectToRoute("main");
     }
 
 

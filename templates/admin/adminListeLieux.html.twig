@@ -35,6 +35,7 @@
                 </thead>
                 <tbody class="tbody">
                 {% for lieu in lieux %}
+                    {% if lieu.archive == false %}
                     <tr>
                         <td>{{ lieu.nom }}</td>
                         <td>{{ lieu.rue }}</td>
@@ -43,6 +44,10 @@
                         <td>{{ lieu.ville.nom }}</td>
                         <td><a href="{{ path('adminModifLieux',{'id':lieu.id}) }}">Modifier</a> - <a href="{{ path('adminDeleteLieux',{'id':lieu.id}) }}">Supprimer</a></td>
                     </tr>
+                    {% else %}
+
+                    {% endif %}
+
                 {% endfor %}
                 </tbody>
             </table>
