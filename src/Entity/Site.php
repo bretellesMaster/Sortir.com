@@ -25,12 +25,13 @@ class Site
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site")
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site", cascade={"remove"})
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="site")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="site", cascade={"remove"})
+     *
      */
     private $sortie;
 

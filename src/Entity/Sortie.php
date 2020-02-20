@@ -41,7 +41,9 @@ class Sortie
      */
     private $duree;
 
+
     /**
+     * @Assert\LessThan("$dateHeureDebut")
      * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
@@ -78,7 +80,6 @@ class Sortie
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="sortie")
-     *
      */
     private $site;
 
@@ -147,7 +148,7 @@ class Sortie
 
     public function getDateLimiteInscription(): ?\DateTimeInterface
     {
-        return $this->dateLimiteInscription;
+        return $this-> dateLimiteInscription;
     }
 
     public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): self
