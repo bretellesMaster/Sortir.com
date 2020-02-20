@@ -4,20 +4,24 @@ namespace App\Controller;
 
 use App\Entity\Lieu;
 use App\Entity\Site;
+use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\LieuType;
 use App\Form\VilleType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\AST\Functions\LengthFunction;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Length;
 
 
 class AdminController extends AbstractController
 {
+    /////////////// Méthode liste lieu en administrateur ///////////////
     /**
      * @Route("/admin/adminListeLieux", name="adminListeLieux")
      * @IsGranted("ROLE_ADMIN")
@@ -31,13 +35,10 @@ class AdminController extends AbstractController
             ['lieux' => $lieux]);
     }
 
+    ////////////// Méthode modifier lieu en administrateur //////////////
     /**
      * @Route("/admin/adminModifLieux/{id}", name="adminModifLieux")
      * @IsGranted("ROLE_ADMIN")
-     * @param EntityManagerInterface $em
-     * @param Request $request
-     * @param $id
-     * @return Response
      */
     public function adminModifLieux(EntityManagerInterface $em, Request $request, $id)
     {
@@ -62,6 +63,7 @@ class AdminController extends AbstractController
         ]);
     }
 
+    ///////////////// Méthode ajout lieu en administrateur /////////////////////
     /**
      * @Route("/admin/adminAjoutLieux", name="adminAjoutLieux")
      * @IsGranted("ROLE_ADMIN")
@@ -86,6 +88,8 @@ class AdminController extends AbstractController
         ]);
     }
 
+    ///////////// Méthode supprimer lieu en administrateur ///////////////
+    ///////// ( attention supprime un lieu sans condition !!! ) ////////////
     /**
      * @Route("/admin/adminDeleteLieux/{id}", name="adminDeleteLieux")
      * @IsGranted("ROLE_ADMIN")
@@ -98,4 +102,6 @@ class AdminController extends AbstractController
         $this->addFlash("success", "lieu delete");
         return $this->redirectToRoute("adminListeLieux");
     }
+
+    //////////// Méthode recherche par nom gestion lieu (pas fait) ///////////////
 }

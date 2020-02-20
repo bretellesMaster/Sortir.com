@@ -24,6 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
+    //////////////// Méthode créer sortie ///////////////////
     /**
      * @Route("/Sortie/Create/", name="sortieCreate")
      * @IsGranted("ROLE_USER")
@@ -93,6 +94,7 @@ class SortieController extends AbstractController
 
     }
 
+    //////////////// Méthode affichage détail de la sortie ////////////////
     /**
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
      * @IsGranted("ROLE_USER")
@@ -114,6 +116,7 @@ class SortieController extends AbstractController
                 'lieu' => $lieux]);
     }
 
+    //////////////// Méthode formulaire modifier une sortie /////////////////
     /**
      * @Route("/Sortie/Modif/{id}", name="sortieModif")
      * @IsGranted("ROLE_USER")
@@ -140,6 +143,7 @@ class SortieController extends AbstractController
         ]);
     }
 
+    ///////////////// Méthode afficher le détail d'une sortie à annuler /////////////////
     /**
      * @Route("/Sortie/Cancel/{id}", name="sortieDetailCancel")
      * @IsGranted("ROLE_USER")
@@ -154,6 +158,7 @@ class SortieController extends AbstractController
 
     }
 
+    //////////////// Méthode pour passer l'état de la sortie a "annulé" ////////////////////
     /**
      * @Route("/Sortie/Cancel2/{id}", name="sortieCancel")
      * @IsGranted("ROLE_USER")
@@ -172,6 +177,7 @@ class SortieController extends AbstractController
         return $this->redirectToRoute("main");
     }
 
+    ////////////// Méthode filtre page principale ////////////////////
     /**
      * @IsGranted("ROLE_USER")
      * @Route("/main2", name="filtre")
@@ -207,7 +213,6 @@ class SortieController extends AbstractController
         ]);
 
     }
-
 
 }
 
