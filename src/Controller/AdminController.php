@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\AST\Functions\LengthFunction;
 use App\Form\AdminSitesUpdateType;
+use App\Form\FiltreSiteType;
 use App\Form\SortieType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,16 +116,17 @@ class AdminController extends AbstractController
      * @param EntityManagerInterface $em
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function adminSites(EntityManagerInterface $em, Request $request)
+    public function adminSites(EntityManagerInterface $em)
+
     {
+        $filtreSiteForm=$this->createFormBuilder(FiltreSiteType::class);
         $repsites = $em->getRepository(Site::class);
         $sites = $repsites->findAll();
-        $repsites = $em->getRepository(Site::class);
-        $sitesTrier = $repsites->findAll();
+        return $this->render('admin/adminSites.html.twig', ["sites" => $sites]);
 
-        return $this->render('admin/adminSites.html.twig', ["sites" => $sites,
-            'sitesTriers' => $sitesTrier]);
     }
+
+
 
     /*
      * @IsGranted("ROLE_ADMIN")
@@ -152,8 +154,12 @@ class AdminController extends AbstractController
     }*/
 
     /**
+     * @param EntityManagerInterface $em
+     * @param $id
+     * @param Request $request
      * @Route("/adminSites/Update/{id}",name="adminSitesUpdate")
      * @IsGranted("ROLE_ADMIN")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function adminSitesUpdate(EntityManagerInterface $em, $id, Request $request)
     {
@@ -179,38 +185,47 @@ class AdminController extends AbstractController
         }
 
         return $this->render('admin/siteUpdate.html.twig', [
+
             'siteForm' => $form->createView()
         ]);
+
     }
 
 
     /**
+     * @param $id
      * @Route("/adminSites/Delete/{id}",name="adminSitesDelete")
      * @IsGranted("ROLE_ADMIN")
+     * @return Response
      */
-    public function adminSitesDelete(EntityManagerInterface $em, $id)
+    public function adminSitesDelete(EntityManagerInterface $em,$id)
     {
 
-        $site = $em->getRepository(Site::class)->find($id);
+            $site = $em->getRepository(Site::class)->find($id);
 
-        if (!$id) {
-            return $this->RedirectToRoute("main");
-        }
+            $site->setArchive(true);
 
-        $em->remove($site);
-        $em->flush();
+            $em->persist($site);
 
-        $siteRepository = $em->getRepository(Site::class);
-        $sites = $siteRepository->findAll();
+            $em->flush();
+
+            $this->addFlash("Success", "Le site a bien été supprimé !");
+
+
+
+
 
         $this->addFlash("Success", "Le site a bien été supprimé !");
 
-        return $this->render('admin/adminSites.html.twig', ["sites" => $sites]);
+        return $this->RedirectToRoute('main');
+
     }
 
     /**
+     * @param EntityManagerInterface $em
      * @Route("/adminSortie", name="adminArchivageSortie")
      * @isGranted("ROLE_ADMIN")
+     * @return Response
      */
     public function archiveSortie(EntityManagerInterface $em)
     {
@@ -220,11 +235,14 @@ class AdminController extends AbstractController
         return $this->render('admin/adminSortie.html.twig', [
             'sorties' => $sorties,
         ]);
-
     }
 
     /**
+     * @param EntityManagerInterface $em
+     * @param Request $request
      * @Route("/adminSites/Add/", name="adminSitesAdd")
+     * @isGranted("ROLE_ADMIN")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function adminSitesAdd(EntityManagerInterface $em, Request $request)
     {
@@ -232,7 +250,7 @@ class AdminController extends AbstractController
         $form = $this->createForm(AdminSitesUpdateType::class, $site);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $site->setArchive(false);
             $nomSite = $form->get('nom')->getViewData();
             $site->setNom($nomSite);
 

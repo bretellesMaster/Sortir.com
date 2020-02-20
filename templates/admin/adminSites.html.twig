@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <form action="{{ path("filtreSites") }}" method="get">
+        <form action="" method="get">
             <label for="nom-search">Search the site:</label>
             <div class="gauche col-6 row">
                 <div class="form-group row col-12">
@@ -13,12 +13,16 @@
                         <select class="form-control" name="nom">
                             {% if sites is defined %}
                                 {% for site in sites %}
+                                    {% if site.archive == false %}
                                     <option name="site" value="{{ site.id }}">{{ site.nom }}</option>
+                                    {% else %}
+
+                                    {% endif %}
                                 {% endfor %}
                             {% endif %}
                         </select>
                     </div>
-
+                
                     <button class="btn btn-primary buttonAdminSites" type="submit">Rechercher</button>
                 </div>
             </div>
@@ -31,28 +35,38 @@
                     <th colspan="2">Villes</th>
                     <th scope="col">&nbsp;</th>
                     <th scope="col">&nbsp;</th>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">&nbsp;</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 {% for site in sites %}
-                    <tr>
+                    {% if site.archive == false %}
+                   <tr>
                         <td>{{ site.nom }}</td>
                         <td></td>
-                        <td><a href="{{ path('adminSitesUpdate', {'id': site.id}) }}">Modifier</a></td>
-                        <td><a href="{{ path('adminSitesDelete', {'id': site.id }) }}">Supprimer</a></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="{{ path('adminSitesUpdate', {'id': site.id}) }}">Modifier</a> & <a href="{{ path('adminSitesDelete', {'id': site.id }) }}">Supprimer</a></td>
+
                     </tr>
+                    {% else %}
+
+                    {% endif %}
                 {% endfor %}
 
                 </tbody>
             </table>
 
+                <div class="buttonUserDetails">
+                    <a class="btn btn-primary buttonUserDetails" href="{{ path ('adminSitesAdd') }}"
+                       role="button">Ajouter</a>
+                </div>
 
-            <div class="buttonUserDetails">
-                <a class="btn btn-primary buttonUserDetails" href="{{ path ('adminSitesAdd') }}"
-                   role="button">Ajouter</a>
-            </div>
         </form>
     </div>
 {% endblock %}

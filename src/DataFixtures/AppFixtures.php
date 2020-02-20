@@ -33,6 +33,7 @@ class AppFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
         $site = new Site();
         $site->setNom('Saint-Herblain');
+        $site->setArchive(false);
         $manager->persist($site);
 
        $nathan = new User();
