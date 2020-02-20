@@ -49,6 +49,7 @@ class Sortie
     private $dateLimiteInscription;
 
     /**
+     * 
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionsMax;
@@ -247,4 +248,32 @@ class Sortie
 
         return $this;
     }
+
+    public function isInscriptionPossible(User $user){
+
+        if($this->etat->getLibelle() != Etat::OUVERTE ){
+            return false;
+        }
+
+
+        if($this->users->contains($user)){
+            return false;
+
+        }
+
+        if ($this->dateLimiteInscription > new \DateTime()){
+            return false;
+
+        }
+
+        if($this->users->count() <= $this->nbInscriptionsMax){
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+
 }

@@ -184,7 +184,7 @@ class SortieController extends AbstractController
     public function sortieDetailCancel(EntityManagerInterface $em, Request $request, $id)
     {
         $sortieRepository = $em->getRepository(Sortie::class);
-        $sorties = $sortieRepository->findBy(["id" => $id]);
+        $sorties = $sortieRepository->find($id);
 
         return $this->render('sortie/sortieCancel.html.twig',
             ["sorties" => $sorties]);
@@ -220,11 +220,11 @@ class SortieController extends AbstractController
     function filtre(EntityManagerInterface $em, Request $request)
     {
         $rep = $em->getRepository(Sortie::class);
+        $site = $em->getRepository(Site::class)->find($request->get('site'));
         $sites = $em->getRepository(Site::class)->findAll();
-
         $filtre = [
             'search' => $request->get('search'),
-            'site' => $request->get('site'),
+            'site' => $site,
             'dateDebut' => $request->get('dateDebut'),
             'dateFin' => $request->get('dateFin'),
             'checkbox1' => $request->get('checkbox1'),

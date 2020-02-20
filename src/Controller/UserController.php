@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use function Sodium\add;
 
 class UserController extends AbstractController
 {
@@ -64,34 +65,20 @@ class UserController extends AbstractController
         $sortie = $em->getRepository(Sortie::class)->find($id);
 
         $user = $this->getUser();
-        $nb = $sortie->getUsers()->count();
-        dump($nb);
-        dump($sortie->getNbInscriptionsMax());
 
-        if ($sortie->getUsers()->contains($user)){
-            $this->addFlash("danger", "Vous êtes déjà inscrit");
-        }
+        if ($sortie->isInscriptionPossible($user)){
 
-        if ($sortie->getUsers()->count() < $sortie->getNbInscriptionsMax()) {
             $sortie->addUser($user);
+            $this->addFlash('success', 'Vous êtes inscrit !');
 
+        }else{
 
-            $nbMax = $sortie->getNbInscriptionsMax();
-            $nb = $sortie->getUsers()->count();
+            $this->addFlash('danger', 'Trop tard déso');
 
-            if($nb == $nbMax){
-                $sortie = $em->getRepository(Sortie::class)->find($id);
-                $etat = $em->getRepository(Etat::class)->find(3);
-                $sortie->setEtat($etat);
-                $em->persist($sortie);
-            }
-            $em->persist($sortie);
-
-
-            $em->flush();
-
-            $this->addFlash("success", 'Vous êtes bien inscrit à l\'évenement : '.$sortie->getNom());
         }
+
+
+
 
         return $this->redirectToRoute('main');
     }
