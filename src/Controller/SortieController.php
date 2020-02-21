@@ -28,6 +28,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
+    //////////////// Méthode créer sortie ///////////////////
     /**
      * @Route("/Sortie/Create/", name="sortieCreate")
      * @IsGranted("ROLE_USER")
@@ -48,8 +49,6 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-
-
 
 
             $publication = $request->get('publication');
@@ -86,10 +85,10 @@ class SortieController extends AbstractController
             $sortie->setOrganisateur($this->getUser());
 
 
-            if($sortie->getDateHeureDebut() < $sortie->getDateLimiteInscription()){
+            if ($sortie->getDateHeureDebut() < $sortie->getDateLimiteInscription()) {
                 $this->addFlash('danger', 'Problème date');
                 return $this->redirectToRoute('sortieCreate', [
-                    'sortie'=>$sortie,
+                    'sortie' => $sortie,
                 ]);
 
             }
@@ -109,6 +108,8 @@ class SortieController extends AbstractController
 
     }
 
+    //////////////// Méthode affichage détail de la sortie ////////////////
+
     /**
      * @Route("/Sortie/Details/{id}", name="sortieDetails")
      * @IsGranted("ROLE_USER")
@@ -124,6 +125,8 @@ class SortieController extends AbstractController
             'users' => $users
         ]);
     }
+
+    //////////////// Méthode formulaire modifier une sortie /////////////////
 
     /**
      * @Route("/Sortie/Modif/{id}", name="sortieModif")
@@ -171,17 +174,23 @@ class SortieController extends AbstractController
         ]);
     }
 
+    ///////////////// Méthode afficher le détail d'une sortie à annuler /////////////////
+
     /**
      * @Route("/Sortie/Cancel/{id}", name="sortieDetailCancel")
      * @IsGranted("ROLE_USER")
      */
     public function sortieDetailCancel(EntityManagerInterface $em, Request $request, $id)
     {
+
         $sortie = $em->getRepository(Sortie::class)->find($id);
+
         return $this->render('sortie/sortieCancel.html.twig',
             ["sortie" => $sortie]);
     }
 
+
+    //////////////// Méthode pour passer l'état de la sortie a "annulé" ////////////////////
 
     /**
      * @Route("/Sortie/Cancel/Motif/{id}", name="sortieMotifAnnulation")
@@ -207,6 +216,8 @@ class SortieController extends AbstractController
     }
 
 
+    ////////////// Méthode filtre page principale ////////////////////
+
     /**
      * @IsGranted("ROLE_USER")
      * @Route("/main2", name="filtre")
@@ -217,11 +228,11 @@ class SortieController extends AbstractController
     public function filtre(EntityManagerInterface $em, Request $request)
     {
         $rep = $em->getRepository(Sortie::class);
+        $site = $em->getRepository(Site::class)->find($request->get('site'));
         $sites = $em->getRepository(Site::class)->findAll();
-
         $filtre = [
             'search' => $request->get('search'),
-            'site' => $request->get('site'),
+            'site' => $site,
             'dateDebut' => $request->get('dateDebut'),
             'dateFin' => $request->get('dateFin'),
             'checkbox1' => $request->get('checkbox1'),
@@ -239,9 +250,5 @@ class SortieController extends AbstractController
         ]);
 
     }
-
-
-
-
 }
 

@@ -53,6 +53,7 @@ class Sortie
     private $dateLimiteInscription;
 
     /**
+     *
      * @ORM\Column(type="integer")
      * @Assert\Range(
      *     min = 1,
@@ -153,7 +154,7 @@ class Sortie
 
     public function getDateLimiteInscription(): ?\DateTimeInterface
     {
-        return $this-> dateLimiteInscription;
+        return $this->dateLimiteInscription;
     }
 
     public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): self
@@ -219,7 +220,7 @@ class Sortie
 
     public function removeUser(User $user): self
     {
-        
+
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
             $user->removeSorty($this);
@@ -264,6 +265,34 @@ class Sortie
         return $this;
     }
 
+
+    public function isInscriptionPossible(User $user)
+    {
+
+        if ($this->getEtat()->getLibelle() != Etat::OUVERTE) {
+            return false;
+        }
+
+
+        if ($this->users->contains($user)) {
+            return false;
+
+        }
+
+        if ($this->dateLimiteInscription < new \DateTime()) {
+            return false;
+
+        }
+
+        if ($this->users->count() >= $this->nbInscriptionsMax) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+
     public function getMotifAnnulation(): ?string
     {
         return $this->motifAnnulation;
@@ -287,4 +316,39 @@ class Sortie
 
         return $this;
     }
+
+    public function isArchivable(User $user)
+    {
+
+        $dateDebut = $this->dateHeureDebut;
+
+        $dateDuJour = new \DateTime();
+
+        $interval = $dateDebut->diff($dateDuJour);
+
+        if ($this->etat->getLibelle() == Etat::PASSEE ||
+            $this->getEtat()->getLibelle() == Etat::ANNULEE) {
+
+            if ($interval->days > 30) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public function isCloturable(){
+        $nb = $this->getUsers()->count();
+        $nbMax = $this->nbInscriptionsMax;
+
+        if($this->getEtat()->getLibelle() == Etat::OUVERTE){
+            if ($nb >= $nbMax){
+                return true;
+
+            }
+
+        }
+        return false;
+    }
+
 }

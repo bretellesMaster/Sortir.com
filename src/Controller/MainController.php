@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Site;
 use App\Entity\Sortie;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,6 +20,23 @@ class MainController extends AbstractController
     public function index(EntityManagerInterface $em)
     {
         $sorties = $em->getRepository(Sortie::class)->getSortieOuverte();
+        $dateDuJour = new \DateTime();
+        foreach($sorties as $sortie){
+            if($sortie->getDateLimiteInscription() < $dateDuJour){
+                $sortie->setEtat($em->getRepository(Etat::class)->find(3));
+                $em->persist($sortie);
+
+            }
+            if($sortie->getDateHeureDebut() < $dateDuJour){
+                $sortie->setEtat($em->getRepository(Etat::class)->find(5));
+                $em->persist($sortie);
+
+            }
+            $em->flush();
+
+        }
+
+
         $sites = $em->getRepository(Site::class)->findAll();
 
 

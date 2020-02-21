@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use function Sodium\add;
 
 class UserController extends AbstractController
 {
@@ -70,49 +71,34 @@ class UserController extends AbstractController
         $sortie = $em->getRepository(Sortie::class)->find($id);
 
         $user = $this->getUser();
-        $nb = $sortie->getUsers()->count();
-        dump($nb);
-        dump($sortie->getNbInscriptionsMax());
 
-        if ($sortie->getUsers()->contains($user)) {
-            $this->addFlash("danger", "Vous êtes déjà inscrit");
-        }
 
-        if ($sortie->getUsers()->count() < $sortie->getNbInscriptionsMax()) {
+        if ($sortie->isInscriptionPossible($user)){
+
+
+
             $sortie->addUser($user);
 
 
-            $em->flush();
-            $this->addFlash("success", 'Vous êtes bien inscrit à l\'évenement : ' . $sortie->getNom());
-        } elseif ($sortie->getUsers()->count() - 1 == $sortie->getNbInscriptionsMax()) {
-            $etat = $em->getRepository(Etat::class)->find(3);
-            $sortie->setEtat($etat);
-            $em->persist($sortie);
-
-            $em->flush();
-            $this->addFlash("danger", 'Sortie complète');
-        } else {
-            $etat = $em->getRepository(Etat::class)->find(3);
-            $sortie->setEtat($etat);
-
-
-            $nbMax = $sortie->getNbInscriptionsMax();
-            $nb = $sortie->getUsers()->count();
-
-            if($nb == $nbMax){
-                $sortie = $em->getRepository(Sortie::class)->find($id);
+            if ($sortie->isCloturable()){
                 $etat = $em->getRepository(Etat::class)->find(3);
                 $sortie->setEtat($etat);
-                $em->persist($sortie);
             }
-
-            $em->persist($sortie);
-
-
+            $em->persist($user);
             $em->flush();
+            $this->addFlash('success', 'Vous êtes inscrit !');
 
-            $this->addFlash("success", 'Vous êtes bien inscrit à l\'évenement : '.$sortie->getNom());
+        }else{
+
+
+            $this->addFlash('danger', 'Trop tard déso');
+
         }
+
+
+
+
+
 
         return $this->redirectToRoute('main');
     }
@@ -128,11 +114,11 @@ class UserController extends AbstractController
     {
 
         $sortie = $em->getRepository(Sortie::class)->find($id);
-        $etat = $em->getRepository(Etat::class)->find(3);
+
         $user = $this->getUser();
 
         $sortie->removeUser($user);
-        if($sortie->getEtat()->getId() === $etat->getId()){
+        if($sortie->getEtat()->getLibelle() === Etat::CLOTUREE){
             $etat = $em->getRepository(Etat::class)->find(2);
             $sortie->setEtat($etat);
         }

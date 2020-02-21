@@ -25,15 +25,22 @@ class Site
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site")
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="site", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie", mappedBy="site")
      *
      */
     private $sortie;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archive;
+
+
 
     public function __construct()
     {
@@ -89,6 +96,8 @@ class Site
         return $this;
     }
 
+
+
     /**
      * @return Collection|Sortie[]
      */
@@ -125,6 +134,18 @@ class Site
     public function __toString()
     {
      return $this->getNom();
+    }
+
+    public function getArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): self
+    {
+        $this->archive = $archive;
+
+        return $this;
     }
 
 }

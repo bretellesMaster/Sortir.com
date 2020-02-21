@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraints\Date;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Sortie|null find($id, $lockMode = null, $lockVersion = null)
@@ -60,6 +61,7 @@ class SortieRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('s');
 
+
         if (!empty($filtre['site'])) {
             $qb->where('s.site = :site')
                 ->setParameter('site', $filtre['site']);
@@ -84,16 +86,20 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if(!empty($filtre['checkbox2'])){
+            $qb->andWhere($qb->expr()->isMemberOf(':user', 's.users'))
+                ->setParameter('user', $user);
 
 
         }
 
         if(!empty($filtre['checkbox3'])){
-
+            $qb->andWhere(':user NOT MEMBER OF s.users')
+                ->setParameter('user', $user);
 
         }
 
         if(!empty($filtre['checkbox4'])){
+            $qb->andWhere(':s.etat = :etat');
 
 
         }
